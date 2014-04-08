@@ -23,6 +23,8 @@ namespace ProjectManager.Controllers
 
             Tenant test = (from t in db.Tenants
                          select t).FirstOrDefault();
+
+            db.Dispose();
             return test.OrgName;
         }
     }
