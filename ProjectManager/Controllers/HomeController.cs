@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ProjectManager.Models;
 
 namespace ProjectManager.Controllers
 {
@@ -16,5 +17,13 @@ namespace ProjectManager.Controllers
             return View();
         }
 
+        public string Test()
+        {
+            DataClassesDataContext db = new DataClassesDataContext();
+
+            Tenant test = (from t in db.Tenants
+                         select t).FirstOrDefault();
+            return test.OrgName;
+        }
     }
 }
