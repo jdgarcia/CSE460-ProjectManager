@@ -33,6 +33,18 @@ namespace ProjectManager.Models
     partial void InsertTenant(Tenant instance);
     partial void UpdateTenant(Tenant instance);
     partial void DeleteTenant(Tenant instance);
+    partial void InsertUser(User instance);
+    partial void UpdateUser(User instance);
+    partial void DeleteUser(User instance);
+    partial void InsertProject(Project instance);
+    partial void UpdateProject(Project instance);
+    partial void DeleteProject(Project instance);
+    partial void InsertRequirement(Requirement instance);
+    partial void UpdateRequirement(Requirement instance);
+    partial void DeleteRequirement(Requirement instance);
+    partial void InsertType(Type instance);
+    partial void UpdateType(Type instance);
+    partial void DeleteType(Type instance);
     #endregion
 		
 		public DataClassesDataContext() : 
@@ -72,6 +84,62 @@ namespace ProjectManager.Models
 				return this.GetTable<Tenant>();
 			}
 		}
+		
+		public System.Data.Linq.Table<Admin> Admins
+		{
+			get
+			{
+				return this.GetTable<Admin>();
+			}
+		}
+		
+		public System.Data.Linq.Table<User> Users
+		{
+			get
+			{
+				return this.GetTable<User>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Project> Projects
+		{
+			get
+			{
+				return this.GetTable<Project>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Requirement> Requirements
+		{
+			get
+			{
+				return this.GetTable<Requirement>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Type> Types
+		{
+			get
+			{
+				return this.GetTable<Type>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ProjectEmployee> ProjectEmployees
+		{
+			get
+			{
+				return this.GetTable<ProjectEmployee>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ProjectRequirement> ProjectRequirements
+		{
+			get
+			{
+				return this.GetTable<ProjectRequirement>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tenants")]
@@ -83,6 +151,14 @@ namespace ProjectManager.Models
 		private int _TenantId;
 		
 		private string _OrgName;
+		
+		private EntitySet<User> _Users;
+		
+		private EntitySet<Project> _Projects;
+		
+		private EntitySet<Requirement> _Requirements;
+		
+		private EntitySet<Type> _Types;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -96,6 +172,10 @@ namespace ProjectManager.Models
 		
 		public Tenant()
 		{
+			this._Users = new EntitySet<User>(new Action<User>(this.attach_Users), new Action<User>(this.detach_Users));
+			this._Projects = new EntitySet<Project>(new Action<Project>(this.attach_Projects), new Action<Project>(this.detach_Projects));
+			this._Requirements = new EntitySet<Requirement>(new Action<Requirement>(this.attach_Requirements), new Action<Requirement>(this.detach_Requirements));
+			this._Types = new EntitySet<Type>(new Action<Type>(this.attach_Types), new Action<Type>(this.detach_Types));
 			OnCreated();
 		}
 		
@@ -139,6 +219,58 @@ namespace ProjectManager.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tenant_User", Storage="_Users", ThisKey="TenantId", OtherKey="TenantId")]
+		public EntitySet<User> Users
+		{
+			get
+			{
+				return this._Users;
+			}
+			set
+			{
+				this._Users.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tenant_Project", Storage="_Projects", ThisKey="TenantId", OtherKey="TenantId")]
+		public EntitySet<Project> Projects
+		{
+			get
+			{
+				return this._Projects;
+			}
+			set
+			{
+				this._Projects.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tenant_Requirement", Storage="_Requirements", ThisKey="TenantId", OtherKey="TenantId")]
+		public EntitySet<Requirement> Requirements
+		{
+			get
+			{
+				return this._Requirements;
+			}
+			set
+			{
+				this._Requirements.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tenant_Type", Storage="_Types", ThisKey="TenantId", OtherKey="TenantId")]
+		public EntitySet<Type> Types
+		{
+			get
+			{
+				return this._Types;
+			}
+			set
+			{
+				this._Types.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -156,6 +288,1294 @@ namespace ProjectManager.Models
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Users(User entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tenant = this;
+		}
+		
+		private void detach_Users(User entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tenant = null;
+		}
+		
+		private void attach_Projects(Project entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tenant = this;
+		}
+		
+		private void detach_Projects(Project entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tenant = null;
+		}
+		
+		private void attach_Requirements(Requirement entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tenant = this;
+		}
+		
+		private void detach_Requirements(Requirement entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tenant = null;
+		}
+		
+		private void attach_Types(Type entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tenant = this;
+		}
+		
+		private void detach_Types(Type entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tenant = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Admins")]
+	public partial class Admin
+	{
+		
+		private int _TenantId;
+		
+		private string _Username;
+		
+		private string _Password;
+		
+		public Admin()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenantId", DbType="Int NOT NULL")]
+		public int TenantId
+		{
+			get
+			{
+				return this._TenantId;
+			}
+			set
+			{
+				if ((this._TenantId != value))
+				{
+					this._TenantId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Username", DbType="NChar(20) NOT NULL", CanBeNull=false)]
+		public string Username
+		{
+			get
+			{
+				return this._Username;
+			}
+			set
+			{
+				if ((this._Username != value))
+				{
+					this._Username = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NChar(20) NOT NULL", CanBeNull=false)]
+		public string Password
+		{
+			get
+			{
+				return this._Password;
+			}
+			set
+			{
+				if ((this._Password != value))
+				{
+					this._Password = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
+	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _TenantId;
+		
+		private int _UserId;
+		
+		private string _Role;
+		
+		private string _Username;
+		
+		private string _Password;
+		
+		private EntitySet<Project> _Projects;
+		
+		private EntitySet<Requirement> _Requirements;
+		
+		private EntityRef<Tenant> _Tenant;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTenantIdChanging(int value);
+    partial void OnTenantIdChanged();
+    partial void OnUserIdChanging(int value);
+    partial void OnUserIdChanged();
+    partial void OnRoleChanging(string value);
+    partial void OnRoleChanged();
+    partial void OnUsernameChanging(string value);
+    partial void OnUsernameChanged();
+    partial void OnPasswordChanging(string value);
+    partial void OnPasswordChanged();
+    #endregion
+		
+		public User()
+		{
+			this._Projects = new EntitySet<Project>(new Action<Project>(this.attach_Projects), new Action<Project>(this.detach_Projects));
+			this._Requirements = new EntitySet<Requirement>(new Action<Requirement>(this.attach_Requirements), new Action<Requirement>(this.detach_Requirements));
+			this._Tenant = default(EntityRef<Tenant>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenantId", DbType="Int NOT NULL")]
+		public int TenantId
+		{
+			get
+			{
+				return this._TenantId;
+			}
+			set
+			{
+				if ((this._TenantId != value))
+				{
+					if (this._Tenant.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTenantIdChanging(value);
+					this.SendPropertyChanging();
+					this._TenantId = value;
+					this.SendPropertyChanged("TenantId");
+					this.OnTenantIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					this.OnUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._UserId = value;
+					this.SendPropertyChanged("UserId");
+					this.OnUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Role", DbType="NChar(20) NOT NULL", CanBeNull=false)]
+		public string Role
+		{
+			get
+			{
+				return this._Role;
+			}
+			set
+			{
+				if ((this._Role != value))
+				{
+					this.OnRoleChanging(value);
+					this.SendPropertyChanging();
+					this._Role = value;
+					this.SendPropertyChanged("Role");
+					this.OnRoleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Username", DbType="NChar(20) NOT NULL", CanBeNull=false)]
+		public string Username
+		{
+			get
+			{
+				return this._Username;
+			}
+			set
+			{
+				if ((this._Username != value))
+				{
+					this.OnUsernameChanging(value);
+					this.SendPropertyChanging();
+					this._Username = value;
+					this.SendPropertyChanged("Username");
+					this.OnUsernameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NChar(20) NOT NULL", CanBeNull=false)]
+		public string Password
+		{
+			get
+			{
+				return this._Password;
+			}
+			set
+			{
+				if ((this._Password != value))
+				{
+					this.OnPasswordChanging(value);
+					this.SendPropertyChanging();
+					this._Password = value;
+					this.SendPropertyChanged("Password");
+					this.OnPasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Project", Storage="_Projects", ThisKey="UserId", OtherKey="ManagerId")]
+		public EntitySet<Project> Projects
+		{
+			get
+			{
+				return this._Projects;
+			}
+			set
+			{
+				this._Projects.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Requirement", Storage="_Requirements", ThisKey="UserId", OtherKey="AssignedUser")]
+		public EntitySet<Requirement> Requirements
+		{
+			get
+			{
+				return this._Requirements;
+			}
+			set
+			{
+				this._Requirements.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tenant_User", Storage="_Tenant", ThisKey="TenantId", OtherKey="TenantId", IsForeignKey=true)]
+		public Tenant Tenant
+		{
+			get
+			{
+				return this._Tenant.Entity;
+			}
+			set
+			{
+				Tenant previousValue = this._Tenant.Entity;
+				if (((previousValue != value) 
+							|| (this._Tenant.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Tenant.Entity = null;
+						previousValue.Users.Remove(this);
+					}
+					this._Tenant.Entity = value;
+					if ((value != null))
+					{
+						value.Users.Add(this);
+						this._TenantId = value.TenantId;
+					}
+					else
+					{
+						this._TenantId = default(int);
+					}
+					this.SendPropertyChanged("Tenant");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Projects(Project entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Projects(Project entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_Requirements(Requirement entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Requirements(Requirement entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Projects")]
+	public partial class Project : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _TenantId;
+		
+		private int _ProjectId;
+		
+		private string _Name;
+		
+		private System.Nullable<System.DateTime> _Start;
+		
+		private System.Nullable<System.DateTime> _ExpectedEnd;
+		
+		private int _Status;
+		
+		private int _ManagerId;
+		
+		private EntityRef<Tenant> _Tenant;
+		
+		private EntityRef<User> _User;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTenantIdChanging(int value);
+    partial void OnTenantIdChanged();
+    partial void OnProjectIdChanging(int value);
+    partial void OnProjectIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnStartChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartChanged();
+    partial void OnExpectedEndChanging(System.Nullable<System.DateTime> value);
+    partial void OnExpectedEndChanged();
+    partial void OnStatusChanging(int value);
+    partial void OnStatusChanged();
+    partial void OnManagerIdChanging(int value);
+    partial void OnManagerIdChanged();
+    #endregion
+		
+		public Project()
+		{
+			this._Tenant = default(EntityRef<Tenant>);
+			this._User = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenantId", DbType="Int NOT NULL")]
+		public int TenantId
+		{
+			get
+			{
+				return this._TenantId;
+			}
+			set
+			{
+				if ((this._TenantId != value))
+				{
+					if (this._Tenant.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTenantIdChanging(value);
+					this.SendPropertyChanging();
+					this._TenantId = value;
+					this.SendPropertyChanged("TenantId");
+					this.OnTenantIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ProjectId
+		{
+			get
+			{
+				return this._ProjectId;
+			}
+			set
+			{
+				if ((this._ProjectId != value))
+				{
+					this.OnProjectIdChanging(value);
+					this.SendPropertyChanging();
+					this._ProjectId = value;
+					this.SendPropertyChanged("ProjectId");
+					this.OnProjectIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NChar(50)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Start", DbType="Date")]
+		public System.Nullable<System.DateTime> Start
+		{
+			get
+			{
+				return this._Start;
+			}
+			set
+			{
+				if ((this._Start != value))
+				{
+					this.OnStartChanging(value);
+					this.SendPropertyChanging();
+					this._Start = value;
+					this.SendPropertyChanged("Start");
+					this.OnStartChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExpectedEnd", DbType="Date")]
+		public System.Nullable<System.DateTime> ExpectedEnd
+		{
+			get
+			{
+				return this._ExpectedEnd;
+			}
+			set
+			{
+				if ((this._ExpectedEnd != value))
+				{
+					this.OnExpectedEndChanging(value);
+					this.SendPropertyChanging();
+					this._ExpectedEnd = value;
+					this.SendPropertyChanged("ExpectedEnd");
+					this.OnExpectedEndChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="Int NOT NULL")]
+		public int Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ManagerId", DbType="Int NOT NULL")]
+		public int ManagerId
+		{
+			get
+			{
+				return this._ManagerId;
+			}
+			set
+			{
+				if ((this._ManagerId != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnManagerIdChanging(value);
+					this.SendPropertyChanging();
+					this._ManagerId = value;
+					this.SendPropertyChanged("ManagerId");
+					this.OnManagerIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tenant_Project", Storage="_Tenant", ThisKey="TenantId", OtherKey="TenantId", IsForeignKey=true)]
+		public Tenant Tenant
+		{
+			get
+			{
+				return this._Tenant.Entity;
+			}
+			set
+			{
+				Tenant previousValue = this._Tenant.Entity;
+				if (((previousValue != value) 
+							|| (this._Tenant.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Tenant.Entity = null;
+						previousValue.Projects.Remove(this);
+					}
+					this._Tenant.Entity = value;
+					if ((value != null))
+					{
+						value.Projects.Add(this);
+						this._TenantId = value.TenantId;
+					}
+					else
+					{
+						this._TenantId = default(int);
+					}
+					this.SendPropertyChanged("Tenant");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Project", Storage="_User", ThisKey="ManagerId", OtherKey="UserId", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Projects.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Projects.Add(this);
+						this._ManagerId = value.UserId;
+					}
+					else
+					{
+						this._ManagerId = default(int);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Requirements")]
+	public partial class Requirement : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _TenantId;
+		
+		private int _RequirementId;
+		
+		private string _Description;
+		
+		private int _TypeId;
+		
+		private System.Nullable<int> _Time;
+		
+		private System.Nullable<int> _AssignedUser;
+		
+		private int _Status;
+		
+		private EntityRef<Tenant> _Tenant;
+		
+		private EntityRef<User> _User;
+		
+		private EntityRef<Type> _Type;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTenantIdChanging(int value);
+    partial void OnTenantIdChanged();
+    partial void OnRequirementIdChanging(int value);
+    partial void OnRequirementIdChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnTypeIdChanging(int value);
+    partial void OnTypeIdChanged();
+    partial void OnTimeChanging(System.Nullable<int> value);
+    partial void OnTimeChanged();
+    partial void OnAssignedUserChanging(System.Nullable<int> value);
+    partial void OnAssignedUserChanged();
+    partial void OnStatusChanging(int value);
+    partial void OnStatusChanged();
+    #endregion
+		
+		public Requirement()
+		{
+			this._Tenant = default(EntityRef<Tenant>);
+			this._User = default(EntityRef<User>);
+			this._Type = default(EntityRef<Type>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenantId", DbType="Int NOT NULL")]
+		public int TenantId
+		{
+			get
+			{
+				return this._TenantId;
+			}
+			set
+			{
+				if ((this._TenantId != value))
+				{
+					if (this._Tenant.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTenantIdChanging(value);
+					this.SendPropertyChanging();
+					this._TenantId = value;
+					this.SendPropertyChanged("TenantId");
+					this.OnTenantIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RequirementId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int RequirementId
+		{
+			get
+			{
+				return this._RequirementId;
+			}
+			set
+			{
+				if ((this._RequirementId != value))
+				{
+					this.OnRequirementIdChanging(value);
+					this.SendPropertyChanging();
+					this._RequirementId = value;
+					this.SendPropertyChanged("RequirementId");
+					this.OnRequirementIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NChar(100)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeId", DbType="Int NOT NULL")]
+		public int TypeId
+		{
+			get
+			{
+				return this._TypeId;
+			}
+			set
+			{
+				if ((this._TypeId != value))
+				{
+					if (this._Type.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTypeIdChanging(value);
+					this.SendPropertyChanging();
+					this._TypeId = value;
+					this.SendPropertyChanged("TypeId");
+					this.OnTypeIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Time", DbType="Int")]
+		public System.Nullable<int> Time
+		{
+			get
+			{
+				return this._Time;
+			}
+			set
+			{
+				if ((this._Time != value))
+				{
+					this.OnTimeChanging(value);
+					this.SendPropertyChanging();
+					this._Time = value;
+					this.SendPropertyChanged("Time");
+					this.OnTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssignedUser", DbType="Int")]
+		public System.Nullable<int> AssignedUser
+		{
+			get
+			{
+				return this._AssignedUser;
+			}
+			set
+			{
+				if ((this._AssignedUser != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAssignedUserChanging(value);
+					this.SendPropertyChanging();
+					this._AssignedUser = value;
+					this.SendPropertyChanged("AssignedUser");
+					this.OnAssignedUserChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="Int NOT NULL")]
+		public int Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tenant_Requirement", Storage="_Tenant", ThisKey="TenantId", OtherKey="TenantId", IsForeignKey=true)]
+		public Tenant Tenant
+		{
+			get
+			{
+				return this._Tenant.Entity;
+			}
+			set
+			{
+				Tenant previousValue = this._Tenant.Entity;
+				if (((previousValue != value) 
+							|| (this._Tenant.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Tenant.Entity = null;
+						previousValue.Requirements.Remove(this);
+					}
+					this._Tenant.Entity = value;
+					if ((value != null))
+					{
+						value.Requirements.Add(this);
+						this._TenantId = value.TenantId;
+					}
+					else
+					{
+						this._TenantId = default(int);
+					}
+					this.SendPropertyChanged("Tenant");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Requirement", Storage="_User", ThisKey="AssignedUser", OtherKey="UserId", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Requirements.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Requirements.Add(this);
+						this._AssignedUser = value.UserId;
+					}
+					else
+					{
+						this._AssignedUser = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Type_Requirement", Storage="_Type", ThisKey="TypeId", OtherKey="TypeId", IsForeignKey=true)]
+		public Type Type
+		{
+			get
+			{
+				return this._Type.Entity;
+			}
+			set
+			{
+				Type previousValue = this._Type.Entity;
+				if (((previousValue != value) 
+							|| (this._Type.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Type.Entity = null;
+						previousValue.Requirements.Remove(this);
+					}
+					this._Type.Entity = value;
+					if ((value != null))
+					{
+						value.Requirements.Add(this);
+						this._TypeId = value.TypeId;
+					}
+					else
+					{
+						this._TypeId = default(int);
+					}
+					this.SendPropertyChanged("Type");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Types")]
+	public partial class Type : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _TenantId;
+		
+		private int _TypeId;
+		
+		private string _Name;
+		
+		private EntitySet<Requirement> _Requirements;
+		
+		private EntityRef<Tenant> _Tenant;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTenantIdChanging(int value);
+    partial void OnTenantIdChanged();
+    partial void OnTypeIdChanging(int value);
+    partial void OnTypeIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public Type()
+		{
+			this._Requirements = new EntitySet<Requirement>(new Action<Requirement>(this.attach_Requirements), new Action<Requirement>(this.detach_Requirements));
+			this._Tenant = default(EntityRef<Tenant>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenantId", DbType="Int NOT NULL")]
+		public int TenantId
+		{
+			get
+			{
+				return this._TenantId;
+			}
+			set
+			{
+				if ((this._TenantId != value))
+				{
+					if (this._Tenant.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTenantIdChanging(value);
+					this.SendPropertyChanging();
+					this._TenantId = value;
+					this.SendPropertyChanged("TenantId");
+					this.OnTenantIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int TypeId
+		{
+			get
+			{
+				return this._TypeId;
+			}
+			set
+			{
+				if ((this._TypeId != value))
+				{
+					this.OnTypeIdChanging(value);
+					this.SendPropertyChanging();
+					this._TypeId = value;
+					this.SendPropertyChanged("TypeId");
+					this.OnTypeIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NChar(20) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Type_Requirement", Storage="_Requirements", ThisKey="TypeId", OtherKey="TypeId")]
+		public EntitySet<Requirement> Requirements
+		{
+			get
+			{
+				return this._Requirements;
+			}
+			set
+			{
+				this._Requirements.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tenant_Type", Storage="_Tenant", ThisKey="TenantId", OtherKey="TenantId", IsForeignKey=true)]
+		public Tenant Tenant
+		{
+			get
+			{
+				return this._Tenant.Entity;
+			}
+			set
+			{
+				Tenant previousValue = this._Tenant.Entity;
+				if (((previousValue != value) 
+							|| (this._Tenant.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Tenant.Entity = null;
+						previousValue.Types.Remove(this);
+					}
+					this._Tenant.Entity = value;
+					if ((value != null))
+					{
+						value.Types.Add(this);
+						this._TenantId = value.TenantId;
+					}
+					else
+					{
+						this._TenantId = default(int);
+					}
+					this.SendPropertyChanged("Tenant");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Requirements(Requirement entity)
+		{
+			this.SendPropertyChanging();
+			entity.Type = this;
+		}
+		
+		private void detach_Requirements(Requirement entity)
+		{
+			this.SendPropertyChanging();
+			entity.Type = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ProjectEmployees")]
+	public partial class ProjectEmployee
+	{
+		
+		private int _TenantId;
+		
+		private int _ProjectId;
+		
+		private int _UserId;
+		
+		public ProjectEmployee()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenantId", DbType="Int NOT NULL")]
+		public int TenantId
+		{
+			get
+			{
+				return this._TenantId;
+			}
+			set
+			{
+				if ((this._TenantId != value))
+				{
+					this._TenantId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectId", DbType="Int NOT NULL")]
+		public int ProjectId
+		{
+			get
+			{
+				return this._ProjectId;
+			}
+			set
+			{
+				if ((this._ProjectId != value))
+				{
+					this._ProjectId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int NOT NULL")]
+		public int UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					this._UserId = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ProjectRequirements")]
+	public partial class ProjectRequirement
+	{
+		
+		private int _TenantId;
+		
+		private int _ProjectId;
+		
+		private int _RequirementId;
+		
+		public ProjectRequirement()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenantId", DbType="Int NOT NULL")]
+		public int TenantId
+		{
+			get
+			{
+				return this._TenantId;
+			}
+			set
+			{
+				if ((this._TenantId != value))
+				{
+					this._TenantId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectId", DbType="Int NOT NULL")]
+		public int ProjectId
+		{
+			get
+			{
+				return this._ProjectId;
+			}
+			set
+			{
+				if ((this._ProjectId != value))
+				{
+					this._ProjectId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RequirementId", DbType="Int NOT NULL")]
+		public int RequirementId
+		{
+			get
+			{
+				return this._RequirementId;
+			}
+			set
+			{
+				if ((this._RequirementId != value))
+				{
+					this._RequirementId = value;
+				}
 			}
 		}
 	}
