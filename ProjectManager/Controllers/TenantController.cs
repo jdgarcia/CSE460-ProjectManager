@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ProjectManager.Models;
+using ProjectManager.Utils;
 
 namespace ProjectManager.Controllers
 {
@@ -31,7 +32,7 @@ namespace ProjectManager.Controllers
 
                 User user = new User();
                 user.Username = newTenant.AdminUsername;
-                user.Password = newTenant.AdminPassword;
+                user.Password = Auth.GetPasswordHash(newTenant.AdminPassword);
                 user.Role = "Admin";
                 // TODO: encrypt passwords
 
@@ -45,7 +46,7 @@ namespace ProjectManager.Controllers
                 db.Tenants.InsertOnSubmit(tenant);
                 db.SubmitChanges();
 
-                ProjectManager.Utils.Auth.Login(user);
+                Auth.Login(user);
             }
 
             return RedirectToAction("Index", "Admin");

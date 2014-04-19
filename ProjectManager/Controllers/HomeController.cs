@@ -74,5 +74,13 @@ namespace ProjectManager.Controllers
             db.Dispose();
             return test.OrgName;
         }
+
+        //
+        // GET: /Home/PassGen/{pass}
+
+        public string PassGen(string id)
+        {
+            return Auth.GetPasswordHash(id);
+        }
     }
 }

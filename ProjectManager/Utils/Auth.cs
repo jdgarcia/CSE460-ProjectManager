@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using ProjectManager.Models;
 
@@ -15,7 +16,7 @@ namespace ProjectManager.Utils
             using (var db = new DataClassesDataContext())
             {
                 User matchedUser = (from u in db.Users
-                                    where u.Username == loginInfo.Username && u.Password == loginInfo.Password
+                                    where u.Username == loginInfo.Username && u.Password == GetPasswordHash(loginInfo.Password)
                                     select u).FirstOrDefault();
 
                 if (matchedUser != null)
@@ -58,6 +59,12 @@ namespace ProjectManager.Utils
         public static CurrentUserContext GetCurrentUser()
         {
             return (CurrentUserContext)HttpContext.Current.Session["CurrentUser"];
+        }
+
+        public static string GetPasswordHash(string password)
+        {
+            var hash = System.Security.Cryptography.SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(hash);
         }
     }
 }
