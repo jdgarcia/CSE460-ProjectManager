@@ -14,7 +14,7 @@ namespace ProjectManager.Controllers
 
         public ActionResult Index()
         {
-            User currentUser = (User)System.Web.HttpContext.Current.Session["CurrentUser"];
+            CurrentUserContext currentUser = ProjectManager.Utils.Auth.GetCurrentUser();
 
             if (currentUser == null)
             {

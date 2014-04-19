@@ -30,13 +30,13 @@ namespace ProjectManager.Controllers
                 tenant.OrgName = newTenant.OrgName;
 
                 User user = new User();
-                user.Username = newTenant.AdminUserName;
+                user.Username = newTenant.AdminUsername;
                 user.Password = newTenant.AdminPassword;
                 user.Role = "Admin";
                 // TODO: encrypt passwords
 
                 Admin admin = new Admin();
-                admin.Username = newTenant.AdminUserName;
+                admin.Username = newTenant.AdminUsername;
                 admin.Password = newTenant.AdminPassword;
 
                 tenant.Users.Insert(tenant.Users.Count, user);
@@ -45,7 +45,7 @@ namespace ProjectManager.Controllers
                 db.Tenants.InsertOnSubmit(tenant);
                 db.SubmitChanges();
 
-                System.Web.HttpContext.Current.Session["CurrentUser"] = user;
+                ProjectManager.Utils.Auth.Login(user);
             }
 
             return RedirectToAction("Index", "Admin");
