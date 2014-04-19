@@ -12,3 +12,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+
+# SQL Server files
+*.mdf
+*.ldf
