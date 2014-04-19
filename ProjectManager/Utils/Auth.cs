@@ -37,14 +37,7 @@ namespace ProjectManager.Utils
             CurrentUserContext currentUser = new CurrentUserContext();
             currentUser.Id = user.UserId;
             currentUser.Username = user.Username;
-
-            using (var db = new DataClassesDataContext())
-            {
-                Admin admin = (from a in db.Admins
-                               where a.TenantId == user.TenantId && a.Username == user.Username
-                               select a).FirstOrDefault();
-                currentUser.IsAdmin = (admin != null);
-            }
+            currentUser.IsAdmin = (user.RoleId == 1);
 
             HttpContext.Current.Session["CurrentUser"] = currentUser;
         }

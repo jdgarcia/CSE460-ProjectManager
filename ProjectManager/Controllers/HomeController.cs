@@ -69,7 +69,8 @@ namespace ProjectManager.Controllers
             DataClassesDataContext db = new DataClassesDataContext();
 
             Tenant test = (from t in db.Tenants
-                         select t).FirstOrDefault();
+                           where t.TenantId == 1
+                           select t).FirstOrDefault();
 
             db.Dispose();
             return test.OrgName;

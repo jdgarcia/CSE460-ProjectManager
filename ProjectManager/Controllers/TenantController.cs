@@ -33,15 +33,9 @@ namespace ProjectManager.Controllers
                 User user = new User();
                 user.Username = newTenant.AdminUsername;
                 user.Password = Auth.GetPasswordHash(newTenant.AdminPassword);
-                user.Role = "Admin";
-                // TODO: encrypt passwords
-
-                Admin admin = new Admin();
-                admin.Username = newTenant.AdminUsername;
-                admin.Password = newTenant.AdminPassword;
+                user.RoleId = 1;
 
                 tenant.Users.Insert(tenant.Users.Count, user);
-                tenant.Admins.Insert(tenant.Admins.Count, admin);
 
                 db.Tenants.InsertOnSubmit(tenant);
                 db.SubmitChanges();
