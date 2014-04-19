@@ -1,0 +1,17 @@
+﻿@model ProjectManager.Models.NewTenant
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<form action="/Tenant/Create" method="post">
+    Organization Name: <input type="text" name="OrgName" />
+    <br />
+    Admin Username: <input type="text" name="AdminUsername" />
+    <br />
+    Admin Password: <input type="password" name="AdminPassword" />
+    <br />
+    <input type="submit" />
+</form>

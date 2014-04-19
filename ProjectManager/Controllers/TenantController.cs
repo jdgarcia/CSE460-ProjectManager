@@ -10,20 +10,35 @@ namespace ProjectManager.Controllers
     public class TenantController : Controller
     {
         //
-        // GET: /Tenant/
+        // GET: /Tenant/Create/
 
-        [HttpPost]
-        public ActionResult Create(string OrgName)
+        public ActionResult Create()
         {
-            DataClassesDataContext db = new DataClassesDataContext();
-            Tenant newTenant = new Tenant();
-            newTenant.OrgName = OrgName;
-            db.Tenants.InsertOnSubmit(newTenant);
-            db.SubmitChanges();
-            db.Dispose();
-
-            return RedirectToAction("Index", "Home");
+            return View();
         }
 
+        //
+        // POST: /Tenant/Create/{newTenant}
+
+        [HttpPost]
+        public ActionResult Create(NewTenant newTenant)
+        {
+            using (var db = new DataClassesDataContext())
+            {
+                Tenant tenant = new Tenant();
+                tenant.OrgName = newTenant.OrgName;
+
+                Admin admin = new Admin();
+                admin.Username = newTenant.AdminUserName;
+                admin.Password = newTenant.AdminPassword;
+
+                tenant.Admins.Insert(tenant.Admins.Count, admin);
+
+                db.Tenants.InsertOnSubmit(tenant);
+                db.SubmitChanges();
+            }
+
+            return View();
+        }
     }
 }

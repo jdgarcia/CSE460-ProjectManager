@@ -4,21 +4,13 @@
     <Type Name="Tenant">
       <Column Name="TenantId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="OrgName" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
-      <Association Name="Tenant_Admin" Member="Admins" ThisKey="TenantId" OtherKey="TenantId" Type="Admin" />
       <Association Name="Tenant_User" Member="Users" ThisKey="TenantId" OtherKey="TenantId" Type="User" />
       <Association Name="Tenant_Project" Member="Projects" ThisKey="TenantId" OtherKey="TenantId" Type="Project" />
       <Association Name="Tenant_Requirement" Member="Requirements" ThisKey="TenantId" OtherKey="TenantId" Type="Requirement" />
       <Association Name="Tenant_Type" Member="Types" ThisKey="TenantId" OtherKey="TenantId" Type="Type" />
       <Association Name="Tenant_ProjectEmployee" Member="ProjectEmployees" ThisKey="TenantId" OtherKey="TenantId" Type="ProjectEmployee" />
       <Association Name="Tenant_ProjectRequirement" Member="ProjectRequirements" ThisKey="TenantId" OtherKey="TenantId" Type="ProjectRequirement" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Admins" Member="Admins">
-    <Type Name="Admin">
-      <Column Name="TenantId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Username" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="Password" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
-      <Association Name="Tenant_Admin" Member="Tenant" ThisKey="TenantId" OtherKey="TenantId" Type="Tenant" IsForeignKey="true" />
+      <Association Name="Tenant_Admin" Member="Admins" ThisKey="TenantId" OtherKey="TenantId" Type="Admin" />
     </Type>
   </Table>
   <Table Name="dbo.Users" Member="Users">
@@ -91,6 +83,15 @@
       <Association Name="Project_ProjectRequirement" Member="Project" ThisKey="ProjectId" OtherKey="ProjectId" Type="Project" IsForeignKey="true" />
       <Association Name="Requirement_ProjectRequirement" Member="Requirement" ThisKey="RequirementId" OtherKey="RequirementId" Type="Requirement" IsForeignKey="true" />
       <Association Name="Tenant_ProjectRequirement" Member="Tenant" ThisKey="TenantId" OtherKey="TenantId" Type="Tenant" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Admins" Member="Admins">
+    <Type Name="Admin">
+      <Column Name="AdminId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenantId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Tenant_Admin" Member="Tenant" ThisKey="TenantId" OtherKey="TenantId" Type="Tenant" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
