@@ -8,6 +8,26 @@ namespace ProjectManager.Utils
 {
     public class Auth
     {
+        public static bool Login(LoginContext loginInfo)
+        {
+            bool success = false;
+
+            using (var db = new DataClassesDataContext())
+            {
+                User matchedUser = (from u in db.Users
+                                    where u.Username == loginInfo.Username && u.Password == loginInfo.Password
+                                    select u).FirstOrDefault();
+
+                if (matchedUser != null)
+                {
+                    Login(matchedUser);
+                    success = true;
+                }
+            }
+
+            return success;
+        }
+
         public static void Login(User user)
         {
             CurrentUserContext currentUser = new CurrentUserContext();

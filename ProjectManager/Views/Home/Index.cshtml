@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ProjectManager.Models.LoginContext
+
+@{
     ViewBag.Title = "Project Manager (Title Pending)";
 }
 
@@ -12,8 +14,12 @@
 
 <h2>Welcome to Project Manager!</h2>
 <p>Project Manager is a web-based SaaS application for managing your team's projects.</p>
-<p>Create an account to get started!</p>
 
+<form action="/Home/Login" method="post">
+    Username: <input type="text" name="Username" /><br />
+    Password: <input type="password" name="Password" /><br />
+    <input type="submit" value="Login" />
+</form>
+
+<p>Or</p>
 <a href="Tenant/Create">Register Your Organization</a>
-<br />
-<a href="">Login (NOT IMPLEMENTED)</a>

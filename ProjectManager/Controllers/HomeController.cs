@@ -17,6 +17,23 @@ namespace ProjectManager.Controllers
             return View();
         }
 
+        //
+        // POST: /Home/Login
+
+        [HttpPost]
+        public ActionResult Login(LoginContext userInfo)
+        {
+            if (ProjectManager.Utils.Auth.Login(userInfo))
+            {
+                return RedirectToAction("Index", "Projects");
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        //
+        // GET: /Home/Test
+
         public string Test()
         {
             DataClassesDataContext db = new DataClassesDataContext();
