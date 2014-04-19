@@ -1,5 +1,11 @@
-﻿@{
+﻿@model ProjectManager.Models.CurrentUserContext
+
+@{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+
+<p>Welcome @Model.Username!</p>
+
+<p>[list of Projects goes here]</p>

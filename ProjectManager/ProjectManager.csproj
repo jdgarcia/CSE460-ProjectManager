@@ -247,8 +247,8 @@
     <Content Include="Views\Projects\Create.cshtml" />
     <Content Include="Views\Projects\NotFound.cshtml" />
     <Content Include="Views\Tenant\Create.cshtml" />
-    <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

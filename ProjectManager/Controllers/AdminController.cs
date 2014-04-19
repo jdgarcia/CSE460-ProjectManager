@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ProjectManager.Models;
+using ProjectManager.Utils;
 
 namespace ProjectManager.Controllers
 {
@@ -14,22 +15,12 @@ namespace ProjectManager.Controllers
 
         public ActionResult Index()
         {
-            CurrentUserContext currentUser = ProjectManager.Utils.Auth.GetCurrentUser();
-
-            if (currentUser == null)
+            if (!Auth.IsLoggedIn())
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "Home");
             }
 
-            return View(currentUser);
-        }
-
-        //
-        // GET: /Admin/Login
-
-        public ActionResult Login()
-        {
-            return View();
+            return View(Auth.GetCurrentUser());
         }
     }
 }

@@ -50,6 +50,11 @@ namespace ProjectManager.Utils
             HttpContext.Current.Session["CurrentUser"] = null;
         }
 
+        public static bool IsLoggedIn()
+        {
+            return (GetCurrentUser() != null);
+        }
+
         public static CurrentUserContext GetCurrentUser()
         {
             return (CurrentUserContext)HttpContext.Current.Session["CurrentUser"];

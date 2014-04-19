@@ -4,34 +4,51 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ProjectManager.Models;
+using ProjectManager.Utils;
 
 namespace ProjectManager.Controllers
 {
     public class ProjectsController : Controller
     {
         //
-        // GET: /Project/
+        // GET: /Projects/
 
         public ActionResult Index()
         {
-            return View();
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            return View(Auth.GetCurrentUser());
         }
 
         //
-        // GET: /Project/Create
+        // GET: /Projects/Create
 
         public ActionResult Create()
         {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+
             return View();
         }
 
         //
-        // GET: /Project/Edit/{id}
+        // GET: /Projects/Edit/{id}
 
         public ActionResult Edit(int id)
         {
             // this function only returns the page for editing a project
             // we'll need a seperate Edit(Project project) for actually editing a project
+
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
 
             DataClassesDataContext db = new DataClassesDataContext();
             Project project = (from p in db.Projects
@@ -41,18 +58,10 @@ namespace ProjectManager.Controllers
 
             if (project == null)
             {
-                return RedirectToAction("NotFound");
+                return View("NotFound");
             }
 
             return View(project);
-        }
-
-        //
-        // GET: /Project/NotFound
-
-        public ActionResult NotFound()
-        {
-            return View();
         }
     }
 }
