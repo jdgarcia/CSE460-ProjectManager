@@ -13,16 +13,19 @@ namespace ProjectManager.Utils
         {
             bool success = false;
 
-            using (var db = new DataClassesDataContext())
+            if (!string.IsNullOrEmpty(loginInfo.Username) && !string.IsNullOrEmpty(loginInfo.Password))
             {
-                User matchedUser = (from u in db.Users
-                                    where u.Username == loginInfo.Username && u.Password == GetPasswordHash(loginInfo.Password)
-                                    select u).FirstOrDefault();
-
-                if (matchedUser != null)
+                using (var db = new DataClassesDataContext())
                 {
-                    Login(matchedUser);
-                    success = true;
+                    User matchedUser = (from u in db.Users
+                                        where u.Username == loginInfo.Username && u.Password == GetPasswordHash(loginInfo.Password)
+                                        select u).FirstOrDefault();
+
+                    if (matchedUser != null)
+                    {
+                        Login(matchedUser);
+                        success = true;
+                    }
                 }
             }
 
