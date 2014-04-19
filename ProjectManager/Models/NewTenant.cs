@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ProjectManager.Models
 {
-    public class NewTenant
+    public class NewTenantContext
     {
         public string OrgName { get; set; }
         public string AdminUserName { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ProjectManager.Models;
 
 namespace ProjectManager.Controllers
 {
@@ -13,7 +14,14 @@ namespace ProjectManager.Controllers
 
         public ActionResult Index()
         {
-            return RedirectToAction("Login");
+            User currentUser = (User)System.Web.HttpContext.Current.Session["CurrentUser"];
+
+            if (currentUser == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            return View(currentUser);
         }
 
         //
