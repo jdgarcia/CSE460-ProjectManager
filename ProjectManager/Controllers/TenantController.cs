@@ -23,6 +23,7 @@ namespace ProjectManager.Controllers
         [HttpPost]
         public ActionResult Create(NewTenant newTenant)
         {
+            // TODO: check if OrgName already exists
             using (var db = new DataClassesDataContext())
             {
                 Tenant tenant = new Tenant();
@@ -31,6 +32,7 @@ namespace ProjectManager.Controllers
                 Admin admin = new Admin();
                 admin.Username = newTenant.AdminUserName;
                 admin.Password = newTenant.AdminPassword;
+                // TODO: encrypt passwords
 
                 tenant.Admins.Insert(tenant.Admins.Count, admin);
 
@@ -38,7 +40,7 @@ namespace ProjectManager.Controllers
                 db.SubmitChanges();
             }
 
-            return View();
+            return RedirectToAction("Index", "Admin");
         }
     }
 }
