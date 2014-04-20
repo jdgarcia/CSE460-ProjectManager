@@ -7,7 +7,7 @@
 
 <h2>Projects</h2>
 
-<a href="/Projects/Create" class="btn btn-success">New Project</a>
+<a href="/Projects/Create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Project</a>
 <br /><br />
 
 @{  
@@ -36,7 +36,7 @@
                 <td>@project.ExpectedEnd</td>
                 <td>@project.Manager</td>
                 <td>@project.Status</td>
-                <td><a href="/Projects/Edit/@project.ProjectId" class="btn btn-xs btn-info">Edit <span class="glyphicon glyphicon-pencil"></span></a></td>
+                <td><a href="/Projects/Edit/@project.ProjectId" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td>
             </tr>
         }
         </table>

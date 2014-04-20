@@ -38,9 +38,8 @@
     <label for="newStatus">New Project Status: </label>
     @Html.DropDownListFor(s => Model.StatusId, new SelectList(@Model.StatusList, "StatusId", "Name"));
     <br />
+    <br />
 
-
-    
-
-    <input type="submit" value="Modify Project" class="btn btn-primary" />
+    <input type="submit" value="Save Changes" class="btn btn-primary" />
+    <a href="/Projects" class="btn btn-default">Discard Changes</a>
 </form>
