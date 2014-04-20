@@ -6,7 +6,8 @@
 
 <h2>Create</h2>
 
-<form action="/Tenant/Create" method="post">
+@using (Html.BeginForm("Create", "Tenant", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     <label for="orgName">Organization Name</label>
     <input type="text" id="orgName" name="OrgName" autofocus="autofocus" />
     <br />
@@ -16,5 +17,14 @@
     <label for="adminPassword">Admin Password</label>
     <input type="password" id="adminPassword" name="AdminPassword" />
     <br />
+    <label for="bannerColor">Banner Color (hexadecimal color)</label>
+    <input type="text" id="bannerColor" name="BannerColor" value="#" maxlength="7"/>
+    <br />
+    <label for="textColor">Main Text Color (hexadecimal color)</label>
+    <input type="text" id="textColor" name="TextColor" value="#" maxlength="7"/>
+    <br />
+    <label for="file">Logo</label>
+    <input type="file" id="file" name="file" />
+    <br />
     <input type="submit" value="Register" class="btn btn-primary" />
-</form>
+}

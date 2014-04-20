@@ -10,5 +10,7 @@ namespace ProjectManager.Models
         public string OrgName { get; set; }
         public string AdminUsername { get; set; }
         public string AdminPassword { get; set; }
+        public string BannerColor { get; set; }
+        public string TextColor { get; set; }
     }
 }
