@@ -5,3 +5,16 @@
 }
 
 <h2>Create</h2>
+
+<form action="/Projects/Create" method="post">
+    <label for="projName">Project Name</label>
+    <input type="text" id="projectName" name="Name" autofocus="autofocus" />
+    <br />
+    <label for="startTime">Project Start Date</label>
+    <input type="date" id="startDate" name="Start" />
+    <br />
+    <label for="endTime">Project End Date</label>
+    <input type="date" id="endDate" name="ExpectedEnd" />
+    <br />
+    <input type="submit" value="Create Project" class="btn btn-primary" />
+</form>
