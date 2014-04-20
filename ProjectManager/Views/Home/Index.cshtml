@@ -4,23 +4,7 @@
     ViewBag.Title = "Project Manager (Title Pending)";
 }
 
-<h1>Project Manager (Title Pending)</h1>
-
-<div class="dev-test">
-    <p>---For dev purposes only---</p>
-    <p>Database Access Test: @Html.Action("Test")</p>
-    <p>If you see "sample_tenant" above, the application is working correctly.</p>
-</div>
-
 <h2>Welcome to Project Manager!</h2>
 <p>Project Manager is a web-based SaaS application for managing your team's projects.</p>
-
-<form action="/Home/Login" method="post">
-    Username: <input type="text" name="Username" /><br />
-    Password: <input type="password" name="Password" /><br />
-    <input type="submit" value="Login" class="btn btn-primary" />
-</form>
-
-<br />
-<p>Or</p>
-<a class="btn btn-default" href="Tenant/Create">Register Your Organization</a>
+<p>Registering your organization is easy and takes only a minute!</p>
+<a class="btn btn-primary" href="Tenant/Create">Register Your Organization</a>

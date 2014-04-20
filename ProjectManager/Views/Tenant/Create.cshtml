@@ -7,11 +7,14 @@
 <h2>Create</h2>
 
 <form action="/Tenant/Create" method="post">
-    Organization Name: <input type="text" name="OrgName" />
+    <label for="orgName">Organization Name</label>
+    <input type="text" id="orgName" name="OrgName" autofocus="autofocus" />
     <br />
-    Admin Username: <input type="text" name="AdminUsername" />
+    <label for="adminUsername">Admin Username</label>
+    <input type="text" id="adminUsername" name="AdminUsername" />
     <br />
-    Admin Password: <input type="password" name="AdminPassword" />
+    <label for="adminPassword">Admin Password</label>
+    <input type="password" id="adminPassword" name="AdminPassword" />
     <br />
-    <input type="submit" />
+    <input type="submit" value="Register" class="btn btn-primary" />
 </form>

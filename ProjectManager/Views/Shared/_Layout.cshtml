@@ -8,18 +8,34 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <a href="/Home">Home</a>
-    @{
-        if (ProjectManager.Utils.Auth.IsLoggedIn())
-        {
-            <a href="/Home/Logout">Logout</a>
-        }
-        else
-        {
-            <a href="/Home/Login">Login</a>
-        }
-    }
-    @RenderBody()
+    <div class="header-container">
+        <div class="header">
+            <h1><a href="/Home">ProjectManager</a></h1>
+
+            <div class="login pull-right">
+                @{
+                if (ProjectManager.Utils.Auth.IsLoggedIn())
+                {
+                    <a class="btn btn-default" href="/Home/Logout">Logout</a>
+                }
+                else
+                {
+                    <form action="/Home/Login" method="post">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="Username" />
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="Password" />
+                        <input type="submit" value="Login" class="btn btn-default" />
+                    </form>
+                }
+            }
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content-container">
+        @RenderBody()
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
