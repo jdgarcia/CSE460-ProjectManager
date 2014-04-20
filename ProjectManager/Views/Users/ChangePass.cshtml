@@ -1,0 +1,17 @@
+﻿@model ProjectManager.Models.User
+
+@{
+    ViewBag.Title = "ChangePass";
+}
+
+<h2>ChangePass</h2>
+
+<form action="/Users/ChangePass" method="post">
+    <label for="oldPass">Old Password:</label>
+    <input type="text" id="oldPass" name="oldPass" autofocus="autofocus" />
+    <br />
+    <label for="newPass">New Password:</label>
+    <input type="text" id="newPass" name="newPass" />
+    <br />
+    <input type="submit" value="Change Password" class="btn btn-primary" />
+</form>

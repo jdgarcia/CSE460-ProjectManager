@@ -1,0 +1,17 @@
+﻿@model ProjectManager.Models.User
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create User</h2>
+
+<form action="/Users/Create" method="post">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="Username" autofocus="autofocus" />
+    <br />
+    <label for="password">Password</label>
+    <input type="text" id="password" name="password" />
+    <br />
+    <input type="submit" value="Create User" class="btn btn-primary" />
+</form>
