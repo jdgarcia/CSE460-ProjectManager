@@ -20,7 +20,7 @@
     <label for="oldStartTime">Old Project Start Date: @Model.Start.ToString().Substring(0,10)</label>
     <br />
     <label for="newStartTime">New Project Start Date:</label>
-    <input type="date" id="startDate" name="RawDateStart" />
+    <input type="date" id="startDate" name="RawDateStart" value="@Model.RawDateStart.Date" />
     <input type="hidden" id="hiddenStartDate" name="Start" value="@Model.RawDateStart"
     <br />
     <br />
@@ -28,7 +28,7 @@
     <label for="oldEndTime">Old Project End Date: @Model.ExpectedEnd.ToString().Substring(0,10)</label>
     <br />
     <label for="newEndTime">New Project End Date</label>
-    <input type="date" id="endDate" name="RawDateEnd" />
+    <input type="date" id="endDate" name="RawDateEnd" value="@Model.RawDateEnd.Date" />
     <input type="hidden" id="hiddenEndDate" name="ExpectedEnd" value="@Model.RawDateEnd"
     <br />
     <br />

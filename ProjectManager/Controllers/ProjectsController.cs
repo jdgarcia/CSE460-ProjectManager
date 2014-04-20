@@ -56,8 +56,64 @@ namespace ProjectManager.Controllers
                 return View(projects);
             }
             else
+                //Will be replaced with viewing requirements, once those are available
                 return View("NotFound");
 
+        }
+
+        //
+        // POST: /Project/
+        [HttpPost]
+        public ActionResult Index(string Filter)
+        {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            //Full project viewing privileges
+            if (Auth.GetCurrentUser().IsAdmin)
+            {
+                List<ProjectContext> projects = new List<ProjectContext>();
+
+                using (var db = new DataClassesDataContext())
+                {
+                    var result = (from p in db.Projects
+                                  where p.TenantId == Auth.GetCurrentUser().TenantId
+                                  select p);
+                    foreach (var project in result)
+                    {
+                        if (project.Name.ToLowerInvariant().Contains(Filter) ||
+                            project.Status1.Name.ToLowerInvariant().Contains(Filter))
+                            projects.Add(new ProjectContext(project));
+                    }
+                }
+
+                return View(projects);
+            }
+            //Can only view projects they manage
+            else if (Auth.GetCurrentUser().IsManager)
+            {
+                List<ProjectContext> projects = new List<ProjectContext>();
+
+                using (var db = new DataClassesDataContext())
+                {
+                    var result = (from p in db.Projects
+                                  where p.TenantId == Auth.GetCurrentUser().TenantId &&
+                                  p.ManagerId == Auth.GetCurrentUser().UserId
+                                  select p);
+                    foreach (var project in result)
+                    {
+                        if (project.Name.ToLowerInvariant().Contains(Filter) ||
+                            project.Status1.Name.ToLowerInvariant().Contains(Filter))
+                        projects.Add(new ProjectContext(project));
+                    }
+                }
+                return View(projects);
+            }
+            else
+                //Will be replaced with viewing requirements, once those are available
+                return View("NotFound");
         }
 
         //
