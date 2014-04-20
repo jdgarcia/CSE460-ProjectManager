@@ -2,10 +2,12 @@
 
 @{
     ViewBag.Title = "Index";
+    ViewBag.Page = "Settings";
 }
 
-<h2>Index</h2>
+<h2>Tenant Settings</h2>
 
 <p>Welcome @Model.Username!</p>
 
-<p>[list of Employees goes here]</p>
+<h3>Current Logo:</h3>
+<p><img src="@Model.LogoPath" alt="[Logo]" height="200"</p>

@@ -13,11 +13,16 @@ namespace ProjectManager.Controllers
         //
         // GET: /Admin/
 
-        public ActionResult Index()
+        public ActionResult Index() // Displays tenant specific settings
         {
             if (!Auth.IsLoggedIn())
             {
                 return RedirectToAction("Login", "Home");
+            }
+
+            if (!Auth.GetCurrentUser().IsAdmin)
+            {
+                return RedirectToAction("Index", "Home");
             }
 
             return View(Auth.GetCurrentUser());

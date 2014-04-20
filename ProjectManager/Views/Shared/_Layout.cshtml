@@ -54,10 +54,10 @@
                 <h2>Navigation</h2>
                 <ul class="nav nav-pills nav-stacked">
                     <li @{if (ViewBag.Page == "Projects") { <text>class="active"</text> } }><a @{if (ViewBag.Page == "Projects") { <text>style="background-color:@currentUser.BannerColor; color:@currentUser.TextColor"</text> } } href="/Projects">Projects</a></li>
-                    <li @{if (ViewBag.Page == "Users") { <text>class="active"</text> } }><a @{if (ViewBag.Page == "Users") { <text>style="background-color:@currentUser.BannerColor; color:@currentUser.TextColor"</text> } } href="/Users">Users</a></li>
+                    @{if(currentUser.IsAdmin) { <li @{if (ViewBag.Page == "Users") { <text>class="active"</text> } }><a @{if (ViewBag.Page == "Users") { <text>style="background-color:@currentUser.BannerColor; color:@currentUser.TextColor"</text> } } href="/Users">Users</a></li>}}
                     <li @{if (ViewBag.Page == "Requirements") { <text>class="active"</text> } }><a @{if (ViewBag.Page == "Requirements") { <text>style="background-color:@currentUser.BannerColor; color:@currentUser.TextColor"</text> } } href="#">Requirements</a></li>
                     <li @{if (ViewBag.Page == "Statuses") { <text>class="active"</text> } }><a @{if (ViewBag.Page == "Statuses") { <text>style="background-color:@currentUser.BannerColor; color:@currentUser.TextColor"</text> } } href="#">Statuses</a></li>
-                    <li @{if (ViewBag.Page == "Settings") { <text>class="active"</text> } }><a @{if (ViewBag.Page == "Settings") { <text>style="background-color:@currentUser.BannerColor; color:@currentUser.TextColor"</text> } } href="#">Tenant Settings</a></li>
+                    @{if(currentUser.IsAdmin) { <li @{if (ViewBag.Page == "Settings") { <text>class="active"</text> } }><a @{if (ViewBag.Page == "Settings") { <text>style="background-color:@currentUser.BannerColor; color:@currentUser.TextColor"</text> } } href="/Admin">Tenant Settings</a></li>}}
                 </ul>
             </div>
             }
