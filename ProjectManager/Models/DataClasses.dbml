@@ -81,22 +81,8 @@
       <Association Name="User_ProjectEmployee" Member="ProjectEmployees" ThisKey="UserId" OtherKey="UserId" Type="ProjectEmployee" />
       <Association Name="User_Project" Member="Projects" ThisKey="UserId" OtherKey="ManagerId" Type="Project" />
       <Association Name="User_Requirement" Member="Requirements" ThisKey="UserId" OtherKey="AssignedUser" Type="Requirement" />
-      <Association Name="Tenant_User" Member="Tenant" ThisKey="TenantId" OtherKey="TenantId" Type="Tenant" IsForeignKey="true" />
       <Association Name="Role_User" Member="Role" ThisKey="RoleId" OtherKey="RoleId" Type="Role" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Tenants" Member="Tenants">
-    <Type Name="Tenant">
-      <Column Name="TenantId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="OrgName" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
-      <Association Name="Tenant_ProjectEmployee" Member="ProjectEmployees" ThisKey="TenantId" OtherKey="TenantId" Type="ProjectEmployee" />
-      <Association Name="Tenant_ProjectRequirement" Member="ProjectRequirements" ThisKey="TenantId" OtherKey="TenantId" Type="ProjectRequirement" />
-      <Association Name="Tenant_Project" Member="Projects" ThisKey="TenantId" OtherKey="TenantId" Type="Project" />
-      <Association Name="Tenant_Requirement" Member="Requirements" ThisKey="TenantId" OtherKey="TenantId" Type="Requirement" />
-      <Association Name="Tenant_RequirementType" Member="RequirementTypes" ThisKey="TenantId" OtherKey="TenantId" Type="RequirementType" />
-      <Association Name="Tenant_Status" Member="Status" ThisKey="TenantId" OtherKey="TenantId" Type="Status" />
-      <Association Name="Tenant_User" Member="Users" ThisKey="TenantId" OtherKey="TenantId" Type="User" />
-      <Association Name="Tenant_Role" Member="Roles" ThisKey="TenantId" OtherKey="TenantId" Type="Role" />
+      <Association Name="Tenant_User" Member="Tenant" ThisKey="TenantId" OtherKey="TenantId" Type="Tenant" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Roles" Member="Roles">
@@ -106,6 +92,23 @@
       <Column Name="Title" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Association Name="Role_User" Member="Users" ThisKey="RoleId" OtherKey="RoleId" Type="User" />
       <Association Name="Tenant_Role" Member="Tenant" ThisKey="TenantId" OtherKey="TenantId" Type="Tenant" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tenants" Member="Tenants">
+    <Type Name="Tenant">
+      <Column Name="TenantId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrgName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="LogoPath" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="BannerColor" Type="System.String" DbType="VarChar(7) NOT NULL" CanBeNull="false" />
+      <Column Name="TextColor" Type="System.String" DbType="VarChar(7) NOT NULL" CanBeNull="false" />
+      <Association Name="Tenant_ProjectEmployee" Member="ProjectEmployees" ThisKey="TenantId" OtherKey="TenantId" Type="ProjectEmployee" />
+      <Association Name="Tenant_ProjectRequirement" Member="ProjectRequirements" ThisKey="TenantId" OtherKey="TenantId" Type="ProjectRequirement" />
+      <Association Name="Tenant_Project" Member="Projects" ThisKey="TenantId" OtherKey="TenantId" Type="Project" />
+      <Association Name="Tenant_Requirement" Member="Requirements" ThisKey="TenantId" OtherKey="TenantId" Type="Requirement" />
+      <Association Name="Tenant_RequirementType" Member="RequirementTypes" ThisKey="TenantId" OtherKey="TenantId" Type="RequirementType" />
+      <Association Name="Tenant_Status" Member="Status" ThisKey="TenantId" OtherKey="TenantId" Type="Status" />
+      <Association Name="Tenant_User" Member="Users" ThisKey="TenantId" OtherKey="TenantId" Type="User" />
+      <Association Name="Tenant_Role" Member="Roles" ThisKey="TenantId" OtherKey="TenantId" Type="Role" />
     </Type>
   </Table>
 </Database>

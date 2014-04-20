@@ -8,15 +8,21 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="header-container">
+    @{
+    bool loggedIn = ProjectManager.Utils.Auth.IsLoggedIn();
+    ProjectManager.Models.CurrentUserContext currentUser = ProjectManager.Utils.Auth.GetCurrentUser();
+    <div class="header-container" @{if (loggedIn) { <text>style="background-color: @currentUser.BannerColor;"</text> } }>
         <div class="header">
-            <h1><a href="/Home">ProjectManager</a></h1>
+            <h1><a @{if (loggedIn) { <text>style="color: @currentUser.TextColor;"</text> } } href="/Home">
+                @{if (loggedIn) {<text>@currentUser.TenantName Project Manager</text>}else {<text>SaaS Project Manager</text>}}
+
+                </a></h1>
 
             <div class="login pull-right">
                 @{
-                if (ProjectManager.Utils.Auth.IsLoggedIn())
+                if (loggedIn)
                 {
-                    <span class="user">@ProjectManager.Utils.Auth.GetCurrentUser().Username</span>
+                    <span class="user" style="color:@currentUser.TextColor">@currentUser.Username</span>
                     <a class="btn btn-default" href="/Home/Logout">Logout</a>
                 }
                 else
@@ -37,7 +43,7 @@
     <div class="main-content-container">
         @RenderBody()
     </div>
-
+    }
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

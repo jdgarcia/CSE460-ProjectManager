@@ -52,8 +52,8 @@ namespace ProjectManager.Controllers
 
         //
         // POST: /Users/Create
+        
         [HttpPost]
-
         public ActionResult Create(User newUser)
         {
             if (!Auth.GetCurrentUser().IsAdmin)

@@ -11,6 +11,11 @@ namespace ProjectManager.Models
         public int UserId { get; set; }
         public string Username { get; set; }
         public bool IsAdmin { get; set; }
+
+        public string TenantName { get; set; }
+        public string LogoPath { get; set; }
+        public string BannerColor { get; set; }
+        public string TextColor { get; set; }
     }
 
     public class LoginContext

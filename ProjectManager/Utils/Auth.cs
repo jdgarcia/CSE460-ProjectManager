@@ -40,6 +40,17 @@ namespace ProjectManager.Utils
             currentUser.Username = user.Username;
             currentUser.IsAdmin = (user.RoleId == 1);
 
+            using (var db = new DataClassesDataContext())
+            {
+                Tenant tenant = (from t in db.Tenants
+                                 where t.TenantId == currentUser.TenantId
+                                 select t).FirstOrDefault();
+
+                currentUser.BannerColor = tenant.BannerColor;
+                currentUser.TextColor = tenant.TextColor;
+                currentUser.TenantName = tenant.OrgName;
+            }
+
             HttpContext.Current.Session["CurrentUser"] = currentUser;
 
             HttpCookie userCookie = new HttpCookie("ProjectManagerUserSession");

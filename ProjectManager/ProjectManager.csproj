@@ -152,6 +152,7 @@
     <Compile Include="Utils\Auth.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Logos\logo1.jpg" />
     <Content Include="App_Data\ProjectManager.mdf" />
     <Content Include="App_Data\ProjectManager_log.ldf">
       <DependentUpon>ProjectManager.mdf</DependentUpon>
