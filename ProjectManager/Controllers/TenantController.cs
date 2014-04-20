@@ -24,6 +24,11 @@ namespace ProjectManager.Controllers
         [HttpPost]
         public ActionResult Create(NewTenantContext newTenant)
         {
+            if (string.IsNullOrEmpty(newTenant.OrgName) || string.IsNullOrEmpty(newTenant.AdminUsername) || string.IsNullOrEmpty(newTenant.AdminPassword))
+            {
+                return View();
+            }
+
             // TODO: check if OrgName already exists
             using (var db = new DataClassesDataContext())
             {
