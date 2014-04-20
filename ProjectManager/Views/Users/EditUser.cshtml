@@ -1,7 +1,8 @@
 ﻿@model ProjectManager.Models.User
 
 @{
-    ViewBag.Title = "EditUser"; 
+    ViewBag.Title = "EditUser";
+    //4 and 5 for Manager and employee, 1 for ADMIN  
 }
 
 <h2>EditUser</h2>
@@ -15,10 +16,28 @@
     <br />
     <br />
 
-    <label for="oldRole">Old User Role: @Model.Role.RoleId</label>
+    <label for="oldRole">Old User Role: @{
+        int userRole = Model.RoleId;
+        string displayRole = "";
+        if (userRole == 4) {
+            displayRole = "Manager"; }
+        else if (userRole == 5) {
+            displayRole = "Employee"; }
+        else if (userRole == 1) {
+            displayRole = "ADMIN";}
+        else {
+            displayRole = userRole + ""; }    
+    }@displayRole</label>
     <br />
     <label for="newRole">New User Role: </label>
-    <input type="number" id="role" name="RoleId" value="@Model.Role.RoleId" />
+    @Html.DropDownListFor( m => Model.RoleId , new SelectList(new List<Object>{
+        new { value=1 , text = "Admin" },
+        new { value=4 , text = "Manager" },
+        new { value=5 , text = "Employee" }
+        },
+        "value",
+        "text",
+        3))
     <br />
     <br />
 
