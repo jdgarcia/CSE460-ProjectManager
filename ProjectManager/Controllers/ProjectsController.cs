@@ -33,8 +33,23 @@ namespace ProjectManager.Controllers
                 return RedirectToAction("Login", "Home");
             }
 
-
             return View();
+        }
+
+        //
+        // POST: /Projects/Create
+
+        [HttpPost]
+        public ActionResult Create(Project newProject)
+        {
+            // create new project here
+            // you will need a form in Views/Projects/Create
+            // the 'name' of each input should be the same as the required Project fields
+            // ex: <input type="text" name="Name"> would be the input for Project.Name
+
+
+            // return user to Projects/Index after creation is done
+            return RedirectToAction("Index");
         }
 
         //
