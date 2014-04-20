@@ -49,6 +49,7 @@ namespace ProjectManager.Utils
                 currentUser.BannerColor = tenant.BannerColor;
                 currentUser.TextColor = tenant.TextColor;
                 currentUser.TenantName = tenant.OrgName;
+                currentUser.LogoPath = tenant.LogoPath;
             }
 
             HttpContext.Current.Session["CurrentUser"] = currentUser;

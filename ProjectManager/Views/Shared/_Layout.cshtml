@@ -12,6 +12,7 @@
     bool loggedIn = ProjectManager.Utils.Auth.IsLoggedIn();
     ProjectManager.Models.CurrentUserContext currentUser = ProjectManager.Utils.Auth.GetCurrentUser();
     <div class="header-container" @{if (loggedIn) { <text>style="background-color: @currentUser.BannerColor;"</text> } }>
+        @{if (loggedIn) {<text><img src="@currentUser.LogoPath" alt="Error"></text>}}
         <div class="header">
             <h1><a @{if (loggedIn) { <text>style="color: @currentUser.TextColor;"</text> } } href="/Home">
                 @{if (loggedIn) {<text>@currentUser.TenantName Project Manager</text>}else {<text>SaaS Project Manager</text>}}
