@@ -42,7 +42,24 @@
     </div>
     
     <div class="main-content-container">
-        @RenderBody()
+        <div class="row">
+            @if (loggedIn)
+            {
+            <div class="col-md-2">
+                <h2>Navigation</h2>
+                <ul class="nav nav-pills nav-stacked">
+                    <li @{if (ViewBag.Page == "Projects") { <text>class="active"</text> } }><a href="/Projects">Projects</a></li>
+                    <li @{if (ViewBag.Page == "Users") { <text>class="active"</text> } }><a href="/Users">Users</a></li>
+                    <li @{if (ViewBag.Page == "Requirements") { <text>class="active"</text> } }><a href="#">Requirements</a></li>
+                    <li @{if (ViewBag.Page == "Statuses") { <text>class="active"</text> } }><a href="#">Statuses</a></li>
+                    <li @{if (ViewBag.Page == "Settings") { <text>class="active"</text> } }><a href="#">Tenant Settings</a></li>
+                </ul>
+            </div>
+            }
+            <div class="col-md-10">
+                @RenderBody()
+            </div>
+        </div>
     </div>
     }
     @Scripts.Render("~/bundles/jquery")
