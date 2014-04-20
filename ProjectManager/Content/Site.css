@@ -90,6 +90,10 @@
     padding: 10px 20px;
 }
 
-    .projects td.project-name {
-        font-weight: bold;
-    }
+.projects td.project-name {
+    font-weight: bold;
+}
+
+.img-max-height {
+    max-height: 150px;
+}
