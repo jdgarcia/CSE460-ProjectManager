@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ProjectManager.Models;
 using ProjectManager.Utils;
+using System.Diagnostics;
 
 namespace ProjectManager.Controllers
 {
@@ -37,7 +38,7 @@ namespace ProjectManager.Controllers
         }
 
         //
-        // GET: /Projects/Create
+        // GET: /Users/Create
 
         public ActionResult Create()
         {
@@ -50,13 +51,14 @@ namespace ProjectManager.Controllers
         }
 
         //
-        // POST: /Users/
+        // POST: /Users/Create
         [HttpPost]
 
         public ActionResult Create(User newUser)
         {
             if (!Auth.GetCurrentUser().IsAdmin)
             {
+                // TODO: need to add proper error message handling/display
                 return View("You do not have permisions to do that");
             }
             
@@ -71,6 +73,59 @@ namespace ProjectManager.Controllers
                 db.Users.InsertOnSubmit(user);
                 db.SubmitChanges();
 
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        //
+        // GET: /Users/ChangePass
+
+        public ActionResult ChangePass()
+        {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            return View();
+        }
+
+        //
+        // Put: /Users/ChangePass
+
+        [HttpPost]
+        public ActionResult ChangePass(string oldPass, string newPass)
+        {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            // attempt to log in with current username and oldpass
+            LoginContext tryLogin = new LoginContext();
+            tryLogin.Username = Auth.GetCurrentUser().Username;
+            tryLogin.Password = oldPass;
+
+            if (!Auth.Login(tryLogin))
+            {
+                // FAILED!!! Need to set error code
+                Debug.WriteLine("You Fail!!!");
+                return View();
+            }
+
+
+            // update newPass in database
+            using (var db = new DataClassesDataContext())
+            {
+                User user = (from u in db.Users
+                              where u.TenantId == Auth.GetCurrentUser().TenantId
+                                && u.UserId == Auth.GetCurrentUser().UserId
+                              select u).FirstOrDefault();
+
+                user.Password = Auth.GetPasswordHash(newPass);
+
+                db.SubmitChanges();
             }
 
             return RedirectToAction("Index");
