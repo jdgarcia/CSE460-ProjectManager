@@ -1,11 +1,22 @@
-﻿@model ProjectManager.Models.CurrentUserContext
+﻿@model List<ProjectManager.Models.Project>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Projects</h2>
 
-<p>Welcome @Model.Username!</p>
+<a href="/Projects/Create" class="btn btn-success">New Project</a>
+<br /><br />
 
-<p>[list of Projects goes here]</p>
+@{
+    foreach (var project in Model)
+    {
+        <p>@project.Name</p>
+    }
+    
+    if (Model.Count == 0)
+    {
+        <p>You have no projects.</p>
+    }
+}

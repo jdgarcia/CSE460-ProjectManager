@@ -16,6 +16,7 @@
                 @{
                 if (ProjectManager.Utils.Auth.IsLoggedIn())
                 {
+                    <span class="user">@ProjectManager.Utils.Auth.GetCurrentUser().Username</span>
                     <a class="btn btn-default" href="/Home/Logout">Logout</a>
                 }
                 else

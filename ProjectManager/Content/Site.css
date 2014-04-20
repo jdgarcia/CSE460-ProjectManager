@@ -45,6 +45,6 @@
         color: white;
     }
 
-    .header .login label {
+    .header .login label, .header .login .user {
         color: white;
     }
