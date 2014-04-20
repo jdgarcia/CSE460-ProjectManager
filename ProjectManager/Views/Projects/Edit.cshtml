@@ -1,4 +1,4 @@
-﻿@model ProjectManager.Models.Project
+﻿@model ProjectManager.Models.ProjectContext
 
 @{
     ViewBag.Title = "Edit";
@@ -9,6 +9,7 @@
 
 <form action="/Projects/Edit" method="post">
     <input type="hidden" name ="ProjectId" value="@Model.ProjectId" />
+    <input type="hidden" name ="TenantId" value="@Model.TenantId" />
     <label for="oldProjName">Old Project Name: @Model.Name</label>
     <br />
     <label for="newProjName">New Project Name: </label>
@@ -19,21 +20,24 @@
     <label for="oldStartTime">Old Project Start Date: @Model.Start.ToString().Substring(0,10)</label>
     <br />
     <label for="newStartTime">New Project Start Date:</label>
-    <input type="date" id="startDate" name="Start" />
+    <input type="date" id="startDate" name="RawDateStart" />
+    <input type="hidden" id="hiddenStartDate" name="Start" value="@Model.RawDateStart"
     <br />
     <br />
 
     <label for="oldEndTime">Old Project End Date: @Model.ExpectedEnd.ToString().Substring(0,10)</label>
     <br />
     <label for="newEndTime">New Project End Date</label>
-    <input type="date" id="endDate" name="ExpectedEnd" />
+    <input type="date" id="endDate" name="RawDateEnd" />
+    <input type="hidden" id="hiddenEndDate" name="ExpectedEnd" value="@Model.RawDateEnd"
     <br />
     <br />
 
     <label for="oldStatus">Old Project Status: @Model.Status </label>
     <br />
     <label for="newStatus">New Project Status: </label>
-    <input type="number" id="status" name="Status" />
+    @Html.DropDownListFor(s => @Model.StatusList, new SelectList(@Model.StatusList, "StatusId", "Name"));
+    <input type="hidden" id="statusNum" name="Status" value="Status" />
     <br />
 
     <input type="submit" value="Modify Project" class="btn btn-primary" />

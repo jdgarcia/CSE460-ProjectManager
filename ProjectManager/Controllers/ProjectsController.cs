@@ -92,12 +92,13 @@ namespace ProjectManager.Controllers
             {
                 return View("NotFound");
             }
+            ProjectContext context = new ProjectContext(project);
 
-            return View(project);
+            return View(context);
         }
         
         [HttpPost]
-        public ActionResult Edit(Project projectToModify)
+        public ActionResult Edit(ProjectContext projectToModify)
         {
 
             using (var db = new DataClassesDataContext())
@@ -109,13 +110,13 @@ namespace ProjectManager.Controllers
                 //Check to make sure user actually input values
                 if (projectToModify.Name != null)
                     project.Name = projectToModify.Name;
-                if (projectToModify.Start != null)
-                    project.Start = projectToModify.Start;
-                if (projectToModify.ExpectedEnd != null)
-                    project.ExpectedEnd = projectToModify.ExpectedEnd;
+                if (projectToModify.RawDateStart != null)
+                    project.Start = projectToModify.RawDateStart;
+                if (projectToModify.RawDateEnd != null)
+                    project.ExpectedEnd = projectToModify.RawDateEnd;
 
-                if (projectToModify.Status > 0)
-                    project.Status = projectToModify.Status;
+                if (projectToModify.StatusId > 0)
+                    project.Status = projectToModify.StatusId;
 
                 //project.ManagerId = projectToModify.ManagerId;
                 db.SubmitChanges();
