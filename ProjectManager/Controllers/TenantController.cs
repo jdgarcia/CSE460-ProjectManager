@@ -47,8 +47,8 @@ namespace ProjectManager.Controllers
                 Tenant tenant = new Tenant();
                 tenant.OrgName = newTenant.OrgName;
                 tenant.LogoPath = "/Logos/"+fileName;
-                tenant.BannerColor = OnlyHexInString(newTenant.BannerColor) ? newTenant.BannerColor : "#000000";
-                tenant.TextColor = OnlyHexInString(newTenant.TextColor) ? newTenant.TextColor : "#000000";
+                tenant.BannerColor = OnlyHexInString(newTenant.BannerColor) ? newTenant.BannerColor : "#357ebd";
+                tenant.TextColor = OnlyHexInString(newTenant.TextColor) ? newTenant.TextColor : "#FFFFFF";
 
 
                 User user = new User();
