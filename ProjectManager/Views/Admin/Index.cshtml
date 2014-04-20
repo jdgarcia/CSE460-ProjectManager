@@ -11,3 +11,9 @@
 
 <h3>Current Logo:</h3>
 <p><img src="@Model.LogoPath" alt="[Logo]" class="img-max-height" ></p>
+@using (Html.BeginForm("EditLogo", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" id="file" name="file" />
+    <br />
+    <input type="submit" value="Update Logo" class="btn btn-primary" />
+}
