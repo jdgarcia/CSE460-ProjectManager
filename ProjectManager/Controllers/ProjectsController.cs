@@ -59,21 +59,19 @@ namespace ProjectManager.Controllers
             // you will need a form in Views/Projects/Create
             // the 'name' of each input should be the same as the required Project fields
             // ex: <input type="text" name="Name"> would be the input for Project.Name
+            Project project = new Project();
+            project.TenantId = Auth.GetCurrentUser().TenantId;
+            project.ManagerId = Auth.GetCurrentUser().UserId;
+            project.Name = newProject.Name;
+            project.Start = newProject.Start;
+            project.ExpectedEnd = newProject.ExpectedEnd;
+            project.Status = 1;
             using (var db = new DataClassesDataContext())
             {
-                Project project = new Project();
-                project.TenantId = Auth.GetCurrentUser().TenantId;
-                project.ManagerId = Auth.GetCurrentUser().UserId;
-                project.Name = newProject.Name;
-                project.Start = newProject.Start;
-                project.ExpectedEnd = newProject.ExpectedEnd;
-                project.Status = 1;
-
                 db.Projects.InsertOnSubmit(project);
                 db.SubmitChanges();
 
             }
-
 
             // return user to Projects/Index after creation is done
             return RedirectToAction("Index");
@@ -105,15 +103,34 @@ namespace ProjectManager.Controllers
 
             return View(project);
         }
-        /*
+        
+        [HttpPost]
         public ActionResult Edit(Project projectToModify)
         {
 
+            using (var db = new DataClassesDataContext())
+            {
+                var project = (from p in db.Projects
+                               where p.ProjectId == projectToModify.ProjectId
+                               select p).FirstOrDefault();
+                
+                //Check to make sure user actually input values
+                if (projectToModify.Name != null)
+                    project.Name = projectToModify.Name;
+                if (projectToModify.Start != null)
+                    project.Start = projectToModify.Start;
+                if (projectToModify.ExpectedEnd != null)
+                    project.ExpectedEnd = projectToModify.ExpectedEnd;
 
+                if (projectToModify.Status > 0)
+                    project.Status = projectToModify.Status;
 
+                //project.ManagerId = projectToModify.ManagerId;
+                db.SubmitChanges();
 
+            }
             return RedirectToAction("Index");
-        }*/
+        }
 
     }
 }

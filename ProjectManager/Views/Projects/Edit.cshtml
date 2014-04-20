@@ -7,21 +7,33 @@
 <h2>Edit</h2>
 
 <form action="/Projects/Edit" method="post">
+    <input type="hidden" name ="ProjectId" value="@Model.ProjectId" />
     <label for="oldProjName">Old Project Name: @Model.Name</label>
     <br />
     <label for="newProjName">New Project Name: </label>
-    <input type="text" id="projectName" name="Name" autofocus="autofocus" value="@Model.Name"  />
+    <input type="text" id="projectName" name="Name" value="@Model.Name"  />
+    <br />
     <br />
 
-    <label for="oldStartTime">Old Project Start Date: @Model.Start.Value.Date</label>
+    <label for="oldStartTime">Old Project Start Date: @Model.Start.ToString().Substring(0,10)</label>
     <br />
     <label for="newStartTime">New Project Start Date:</label>
     <input type="date" id="startDate" name="Start" />
     <br />
+    <br />
 
-    <label for="oldEndTime">Old Project End Date: @Model.ExpectedEnd.Value.Date</label>
+    <label for="oldEndTime">Old Project End Date: @Model.ExpectedEnd.ToString().Substring(0,10)</label>
+    <br />
     <label for="newEndTime">New Project End Date</label>
     <input type="date" id="endDate" name="ExpectedEnd" />
     <br />
-    <input type="submit" value="Create Project" class="btn btn-primary" />
+    <br />
+
+    <label for="oldStatus">Old Project Status: @Model.Status </label>
+    <br />
+    <label for="newStatus">New Project Status: </label>
+    <input type="number" id="status" name="Status" />
+    <br />
+
+    <input type="submit" value="Modify Project" class="btn btn-primary" />
 </form>

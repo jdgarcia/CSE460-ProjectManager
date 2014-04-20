@@ -41,6 +41,10 @@ namespace ProjectManager.Utils
             currentUser.IsAdmin = (user.RoleId == 1);
 
             HttpContext.Current.Session["CurrentUser"] = currentUser;
+
+            HttpCookie userCookie = new HttpCookie("ProjectManagerUserSession");
+            userCookie["username"] = user.Username;
+            userCookie["password"] = user.Password;
         }
 
         public static void Logout()
