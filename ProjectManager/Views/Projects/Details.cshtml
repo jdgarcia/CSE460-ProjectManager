@@ -1,5 +1,35 @@
-﻿@{
+﻿@model ProjectManager.Models.ProjectContext
+
+@{
     ViewBag.Title = "Details";
+    ViewBag.Page = "Projects";
 }
 
-<h2>Details</h2>
+<h2>Project Details <a class="btn btn-sm btn-info" href="/Projects/Edit/@Model.ProjectId"><span class="glyphicon glyphicon-pencil"></span> Edit</a></h2>
+
+<table class="project-details">
+    <tr>
+        <td>Project Name:</td>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <td>Manager:</td>
+        <td>@Model.Manager</td>
+    </tr>
+    <tr>
+        <td>Start Date:</td>
+        <td>@Model.Start</td>
+    </tr>
+    <tr>
+        <td>Expected End Date:</td>
+        <td>@Model.ExpectedEnd</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+<p>[Requirements go here]</p>
+
+<p>[Employees go here]</p>

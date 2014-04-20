@@ -98,6 +98,14 @@
     font-weight: bold;
 }
 
+.project-details td {
+    padding: 10px 20px 10px 0px;
+}
+
+    .project-details td:first-child {
+        font-weight: bold;
+    }
+
 .img-max-height {
     max-height: 150px;
 }

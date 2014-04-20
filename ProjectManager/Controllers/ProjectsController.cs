@@ -90,7 +90,6 @@ namespace ProjectManager.Controllers
             {
                 db.Projects.InsertOnSubmit(project);
                 db.SubmitChanges();
-
             }
 
             return RedirectToAction("Index");
@@ -106,7 +105,25 @@ namespace ProjectManager.Controllers
                 return RedirectToAction("Login", "Home");
             }
 
-            return View();
+            ProjectContext projectContext = null;
+
+            using (var db = new DataClassesDataContext())
+            {
+                Project project = (from p in db.Projects
+                                   where p.TenantId == Auth.GetCurrentUser().TenantId && p.ProjectId == id
+                                   select p).FirstOrDefault();
+                if (project != null)
+                {
+                    projectContext = new ProjectContext(project);
+                }
+            }
+
+            if (projectContext == null)
+            {
+                return View("NotFound");
+            }
+
+            return View(projectContext);
         }
 
         //
@@ -119,19 +136,25 @@ namespace ProjectManager.Controllers
                 return RedirectToAction("Login", "Home");
             }
 
-            DataClassesDataContext db = new DataClassesDataContext();
-            Project project = (from p in db.Projects
-                               where p.TenantId == Auth.GetCurrentUser().TenantId && p.ProjectId == id
-                               select p).FirstOrDefault();
-            // still need to match TenantId once we implement logins
+            ProjectContext projectContext = null;
 
-            if (project == null)
+            using (var db = new DataClassesDataContext())
+            {
+                Project project = (from p in db.Projects
+                                   where p.TenantId == Auth.GetCurrentUser().TenantId && p.ProjectId == id
+                                   select p).FirstOrDefault();
+                if (project != null)
+                {
+                    projectContext = new ProjectContext(project);
+                }
+            }
+
+            if (projectContext == null)
             {
                 return View("NotFound");
             }
-            ProjectContext context = new ProjectContext(project);
 
-            return View(context);
+            return View(projectContext);
         }
 
         //
