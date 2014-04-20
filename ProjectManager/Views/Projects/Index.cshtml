@@ -31,7 +31,7 @@
         @foreach (var project in Model)
         {
             <tr>
-                <td class="project-name">@project.Name</td>
+                <td><a class="project-name" href="/Projects/Details/@project.ProjectId">@project.Name</a></td>
                 <td>@project.Start</td>
                 <td>@project.ExpectedEnd</td>
                 <td>@project.Manager</td>

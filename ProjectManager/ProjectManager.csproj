@@ -271,6 +271,7 @@
     <Content Include="Views\Users\EditUser.cshtml" />
     <Content Include="Views\Users\NotFound.cshtml" />
     <Content Include="Views\Users\SelfEditError.cshtml" />
+    <Content Include="Views\Projects\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

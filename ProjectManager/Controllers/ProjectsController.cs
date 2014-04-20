@@ -97,6 +97,19 @@ namespace ProjectManager.Controllers
         }
 
         //
+        // GET: /Projects/Details/{id}
+
+        public ActionResult Details(int id)
+        {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            return View();
+        }
+
+        //
         // GET: /Projects/Edit/{id}
 
         public ActionResult Edit(int id)
@@ -120,6 +133,9 @@ namespace ProjectManager.Controllers
 
             return View(context);
         }
+
+        //
+        // POST: /Projects/Edit
         
         [HttpPost]
         public ActionResult Edit(ProjectContext projectToModify)

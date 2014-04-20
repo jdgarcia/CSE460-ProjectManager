@@ -86,11 +86,15 @@
     border: solid #888888 1px;
 }
 
+    .projects tr:nth-child(2n) {
+        background-color: #f0f0f0;
+    }
+
 .projects td {
     padding: 10px 20px;
 }
 
-.projects td.project-name {
+.projects td .project-name {
     font-weight: bold;
 }
 
