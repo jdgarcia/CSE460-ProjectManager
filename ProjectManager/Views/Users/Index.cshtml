@@ -18,6 +18,7 @@
                 <tr>
                     <td>User</td>
                     <td>Role</td>
+                    <td></td>
                 </tr>
             </thead>
         @foreach (var user in Model)
@@ -25,6 +26,7 @@
             <tr>
                 <td class="project-name">@user.Username</td>
                 <td>@user.Role</td>
+                <td><a href="/Users/EditUser/@user.UserId" class="btn btn-xs btn-info">Edit <span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
         }
         </table>

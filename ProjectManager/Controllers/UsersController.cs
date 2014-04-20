@@ -79,6 +79,47 @@ namespace ProjectManager.Controllers
         }
 
         //
+        // GET: /Users/EditUser
+
+        public ActionResult EditUser(int id)
+        {
+            if (!Auth.GetCurrentUser().IsAdmin)
+                return View("You do not have permissions to do that");
+
+            DataClassesDataContext db = new DataClassesDataContext();
+            User user = (from u in db.Users
+                         where u.UserId == id && u.TenantId == Auth.GetCurrentUser().TenantId
+                         select u).FirstOrDefault();
+
+            if (user == null)
+                return View("NotFound");
+
+            return View(user);
+        }
+
+        //
+        // POST: /Users/EditUser
+        [HttpPost]
+        public ActionResult EditUser(User userToModify)
+        {
+            using (var db = new DataClassesDataContext())
+            {
+                var user = (from u in db.Users
+                            where u.UserId == userToModify.UserId
+                            select u).FirstOrDefault();
+
+                if (userToModify.Username != null)
+                    user.Username = userToModify.Username;
+                if (userToModify.RoleId > 0)
+                    user.RoleId = userToModify.RoleId;
+
+                db.SubmitChanges();
+
+            }
+            return RedirectToAction("Index");
+        }
+
+        //
         // GET: /Users/ChangePass
 
         public ActionResult ChangePass()
@@ -110,7 +151,7 @@ namespace ProjectManager.Controllers
             if (!Auth.Login(tryLogin))
             {
                 // FAILED!!! Need to set error code
-                Debug.WriteLine("You Fail!!!");
+                Debug.WriteLine("You Fail!!!"); //Harsh
                 return View();
             }
 
