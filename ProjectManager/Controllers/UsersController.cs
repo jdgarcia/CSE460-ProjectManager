@@ -90,6 +90,10 @@ namespace ProjectManager.Controllers
             User user = (from u in db.Users
                          where u.UserId == id && u.TenantId == Auth.GetCurrentUser().TenantId
                          select u).FirstOrDefault();
+            int currentId = Auth.GetCurrentUser().UserId;
+
+            if (user.UserId == currentId)
+                return View("SelfEditError");
 
             if (user == null)
                 return View("NotFound");

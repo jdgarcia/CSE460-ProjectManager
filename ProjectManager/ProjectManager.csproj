@@ -270,6 +270,7 @@
     <Content Include="Views\Users\ChangePass.cshtml" />
     <Content Include="Views\Users\EditUser.cshtml" />
     <Content Include="Views\Users\NotFound.cshtml" />
+    <Content Include="Views\Users\SelfEditError.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
