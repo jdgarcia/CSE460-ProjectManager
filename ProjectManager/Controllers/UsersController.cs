@@ -27,6 +27,7 @@ namespace ProjectManager.Controllers
             {
                 var result = (from u in db.Users
                               where u.TenantId == Auth.GetCurrentUser().TenantId
+                              orderby u.RoleId, u.Username
                               select u);
                 foreach (var user in result)
                 {

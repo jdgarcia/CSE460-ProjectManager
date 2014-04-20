@@ -28,6 +28,7 @@ namespace ProjectManager.Controllers
                 {
                     var result = (from p in db.Projects
                                   where p.TenantId == Auth.GetCurrentUser().TenantId
+                                  orderby p.ExpectedEnd ascending
                                   select p);
                     foreach (var project in result)
                     {
@@ -47,6 +48,7 @@ namespace ProjectManager.Controllers
                     var result = (from p in db.Projects
                                   where p.TenantId == Auth.GetCurrentUser().TenantId &&
                                   p.ManagerId == Auth.GetCurrentUser().UserId
+                                  orderby p.ExpectedEnd ascending
                                   select p);
                     foreach (var project in result)
                     {
@@ -80,6 +82,7 @@ namespace ProjectManager.Controllers
                 {
                     var result = (from p in db.Projects
                                   where p.TenantId == Auth.GetCurrentUser().TenantId
+                                  orderby p.ExpectedEnd ascending
                                   select p);
                     foreach (var project in result)
                     {
@@ -101,6 +104,7 @@ namespace ProjectManager.Controllers
                     var result = (from p in db.Projects
                                   where p.TenantId == Auth.GetCurrentUser().TenantId &&
                                   p.ManagerId == Auth.GetCurrentUser().UserId
+                                  orderby p.ExpectedEnd ascending
                                   select p);
                     foreach (var project in result)
                     {
