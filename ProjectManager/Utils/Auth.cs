@@ -39,6 +39,7 @@ namespace ProjectManager.Utils
             currentUser.UserId = user.UserId;
             currentUser.Username = user.Username;
             currentUser.IsAdmin = (user.RoleId == 1);
+            currentUser.IsManager = (user.RoleId == 4);
 
             using (var db = new DataClassesDataContext())
             {

@@ -19,21 +19,45 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-
-            List<ProjectContext> projects = new List<ProjectContext>();
-
-            using (var db = new DataClassesDataContext())
+            //Full project viewing privileges
+            if (Auth.GetCurrentUser().IsAdmin)
             {
-                var result = (from p in db.Projects
-                              where p.TenantId == Auth.GetCurrentUser().TenantId
-                              select p);
-                foreach (var project in result)
-                {
-                    projects.Add(new ProjectContext(project));
-                }
-            }
+                List<ProjectContext> projects = new List<ProjectContext>();
 
-            return View(projects);
+                using (var db = new DataClassesDataContext())
+                {
+                    var result = (from p in db.Projects
+                                  where p.TenantId == Auth.GetCurrentUser().TenantId
+                                  select p);
+                    foreach (var project in result)
+                    {
+                        projects.Add(new ProjectContext(project));
+                    }
+                }
+
+                return View(projects);
+            }
+            //Can only view projects they manage
+            else if (Auth.GetCurrentUser().IsManager)
+            {
+                List<ProjectContext> projects = new List<ProjectContext>();
+
+                using (var db = new DataClassesDataContext())
+                {
+                    var result = (from p in db.Projects
+                                  where p.TenantId == Auth.GetCurrentUser().TenantId &&
+                                  p.ManagerId == Auth.GetCurrentUser().UserId
+                                  select p);
+                    foreach (var project in result)
+                    {
+                        projects.Add(new ProjectContext(project));
+                    }
+                }
+                return View(projects);
+            }
+            else
+                return View("NotFound");
+
         }
 
         //

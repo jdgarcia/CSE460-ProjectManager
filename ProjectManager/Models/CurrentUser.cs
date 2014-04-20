@@ -11,6 +11,7 @@ namespace ProjectManager.Models
         public int UserId { get; set; }
         public string Username { get; set; }
         public bool IsAdmin { get; set; }
+        public bool IsManager { get; set; }
 
         public string TenantName { get; set; }
         public string LogoPath { get; set; }
