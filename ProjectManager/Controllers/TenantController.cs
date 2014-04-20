@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ProjectManager.Models;
 using ProjectManager.Utils;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ProjectManager.Controllers
 {
@@ -30,15 +31,25 @@ namespace ProjectManager.Controllers
                 return View();
             }
 
-            
-            var fileName = "";
-            if (file != null && file.ContentLength > 0)
+            string fileName = "";
+
+            if (file == null || file.ContentLength <= 0)
             {
-                // extract only the fielname
-                fileName = Path.GetFileName(file.FileName);
-                // store the file inside ~/Logos/uploads folder
-                var path = Path.Combine(Server.MapPath("~/Logos"), fileName);
-                file.SaveAs(path);
+                // No logo
+                // Set default to logo1.jpg
+                fileName = "logo1.jpg";
+            }
+            else
+            {
+                var ext = Path.GetExtension(file.FileName);
+                fileName = Regex.Replace(newTenant.OrgName + ext, @"\s", "_");
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    // store the file inside ~/Logos/uploads folder. Name it Org Name of the tenant
+                    var path = Path.Combine(Server.MapPath("~/Logos"), newTenant.OrgName);
+                    file.SaveAs(path);
+                }
             }
 
             // TODO: check if OrgName already exists
