@@ -52,8 +52,16 @@
         margin-top: 2px;
     }
 
+    .header .user {
+        font-size: 1.5em;
+    }
+
     .header .login label, .header .login .user {
         color: white;
+    }
+
+    .header .login .user, .header .login .btn {
+        vertical-align: middle;
     }
 
 /* Projects styles */
