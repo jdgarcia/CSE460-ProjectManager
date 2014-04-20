@@ -25,6 +25,8 @@
 /* Custom styles
 -----------------------------------------------------------*/
 
+/* Header styles */
+
 .header-container {
     background-color: #357ebd;
 }
@@ -33,6 +35,7 @@
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    padding: 5px 0px;
 }
 
     .header h1 {
@@ -45,6 +48,25 @@
         color: white;
     }
 
+    .header .login {
+        margin-top: 2px;
+    }
+
     .header .login label, .header .login .user {
         color: white;
     }
+
+/* Projects styles */
+
+.projects thead td {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.projects tr {
+    border: solid #888888 1px;
+}
+
+.projects td {
+    padding: 10px 20px;
+}

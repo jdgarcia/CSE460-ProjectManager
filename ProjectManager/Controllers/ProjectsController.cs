@@ -20,13 +20,17 @@ namespace ProjectManager.Controllers
                 return RedirectToAction("Login", "Home");
             }
 
-            List<Project> projects;
+            List<ProjectContext> projects = new List<ProjectContext>();
 
             using (var db = new DataClassesDataContext())
             {
-                projects = (from p in db.Projects
-                            where p.TenantId == Auth.GetCurrentUser().TenantId
-                            select p).ToList();
+                var result = (from p in db.Projects
+                              where p.TenantId == Auth.GetCurrentUser().TenantId
+                              select p);
+                foreach (var project in result)
+                {
+                    projects.Add(new ProjectContext(project));
+                }
             }
 
             return View(projects);

@@ -1,4 +1,4 @@
-﻿@model List<ProjectManager.Models.Project>
+﻿@model List<ProjectManager.Models.ProjectContext>
 
 @{
     ViewBag.Title = "Index";
@@ -9,14 +9,33 @@
 <a href="/Projects/Create" class="btn btn-success">New Project</a>
 <br /><br />
 
-@{
-    foreach (var project in Model)
-    {
-        <p>@project.Name</p>
-    }
-    
+@{  
     if (Model.Count == 0)
     {
         <p>You have no projects.</p>
+    }
+    else
+    {
+        <table class="projects">
+            <thead>
+                <tr>
+                    <td>Project Name</td>
+                    <td>Start Date</td>
+                    <td>Expected Completion Date</td>
+                    <td>Manager</td>
+                    <td>Status</td>
+                </tr>
+            </thead>
+        @foreach (var project in Model)
+        {
+            <tr>
+                <td>@project.Name</td>
+                <td>@project.Start</td>
+                <td>@project.ExpectedEnd</td>
+                <td>@project.Manager</td>
+                <td>@project.Status</td>
+            </tr>
+        }
+        </table>
     }
 }
