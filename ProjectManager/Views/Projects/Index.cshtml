@@ -21,19 +21,21 @@
                 <tr>
                     <td>Project Name</td>
                     <td>Start Date</td>
-                    <td>Expected Completion Date</td>
+                    <td>Expected End Date</td>
                     <td>Manager</td>
                     <td>Status</td>
+                    <td></td>
                 </tr>
             </thead>
         @foreach (var project in Model)
         {
             <tr>
-                <td>@project.Name</td>
+                <td class="project-name">@project.Name</td>
                 <td>@project.Start</td>
                 <td>@project.ExpectedEnd</td>
                 <td>@project.Manager</td>
                 <td>@project.Status</td>
+                <td><a href="/Projects/Edit/@project.ProjectId" class="btn btn-xs btn-info">Edit <span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
         }
         </table>

@@ -58,6 +58,11 @@
 
 /* Projects styles */
 
+.projects thead {
+    background-color: #222222;
+    color: white;
+}
+
 .projects thead td {
     font-size: 1.2em;
     font-weight: bold;
@@ -70,3 +75,7 @@
 .projects td {
     padding: 10px 20px;
 }
+
+    .projects td.project-name {
+        font-weight: bold;
+    }
