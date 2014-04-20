@@ -67,8 +67,10 @@ namespace ProjectManager.Controllers
                 project.Name = newProject.Name;
                 project.Start = newProject.Start;
                 project.ExpectedEnd = newProject.ExpectedEnd;
-
                 project.Status = 1;
+
+                db.Projects.InsertOnSubmit(project);
+                db.SubmitChanges();
 
             }
 
@@ -103,5 +105,15 @@ namespace ProjectManager.Controllers
 
             return View(project);
         }
+        /*
+        public ActionResult Edit(Project projectToModify)
+        {
+
+
+
+
+            return RedirectToAction("Index");
+        }*/
+
     }
 }
