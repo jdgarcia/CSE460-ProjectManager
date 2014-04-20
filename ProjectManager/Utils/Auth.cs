@@ -72,7 +72,24 @@ namespace ProjectManager.Utils
 
         public static CurrentUserContext GetCurrentUser()
         {
-            return (CurrentUserContext)HttpContext.Current.Session["CurrentUser"];
+            CurrentUserContext user = (CurrentUserContext)HttpContext.Current.Session["CurrentUser"];
+            if (user == null || user.TenantId == null)
+            {
+                return user;
+            }
+            using (var db = new DataClassesDataContext())
+            {
+                Tenant tenant = (from t in db.Tenants
+                                 where t.TenantId == user.TenantId
+                                 select t).FirstOrDefault();
+                
+                user.LogoPath = tenant.LogoPath;
+                user.TextColor = tenant.TextColor;
+                user.BannerColor = tenant.BannerColor;
+                user.TenantName = tenant.OrgName;
+            }
+
+            return user;
         }
 
         public static string GetPasswordHash(string password)
