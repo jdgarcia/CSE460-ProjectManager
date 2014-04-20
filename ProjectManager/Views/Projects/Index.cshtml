@@ -6,16 +6,14 @@
 }
 
 <h2>Projects</h2>
-<form action="/Projects/" method="post">
-<label for="filterText">Search Projects by Title or Status: </label>
-<input type="text" id="filterInput" name="Filter" />
-<input type="submit" value="Search" class="btn btn-primary" />
-<a href="/Projects/Create" class="btn btn-success" >New Project</a>
 
-<<<<<<< Updated upstream
 <a href="/Projects/Create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Project</a>
-=======
->>>>>>> Stashed changes
+
+<form action="/Projects/" method="post" class="pull-right">
+    <input type="text" id="filterInput" name="Filter" placeholder="Title or Status" />
+    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
+</form>
+
 <br /><br />
 
 @{  
@@ -50,4 +48,4 @@
         </table>
     }
 }
-    </form>
+
