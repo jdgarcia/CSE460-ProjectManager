@@ -35,7 +35,8 @@ namespace ProjectManager.Utils
         public static void Login(User user)
         {
             CurrentUserContext currentUser = new CurrentUserContext();
-            currentUser.Id = user.UserId;
+            currentUser.TenantId = user.TenantId;
+            currentUser.UserId = user.UserId;
             currentUser.Username = user.Username;
             currentUser.IsAdmin = (user.RoleId == 1);
 
