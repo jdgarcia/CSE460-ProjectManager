@@ -13,7 +13,12 @@
     ProjectManager.Models.CurrentUserContext currentUser = ProjectManager.Utils.Auth.GetCurrentUser();
     <div class="header-container" @{if (loggedIn) { <text>style="background-color: @currentUser.BannerColor;"</text> } }>
         <div class="header">
-            @{if (loggedIn && !string.IsNullOrEmpty(currentUser.LogoPath)) {<text><img class="logo pull-left" src="@currentUser.LogoPath" alt="Logo"></text>}}
+            @{
+            if (loggedIn && !string.IsNullOrEmpty(currentUser.LogoPath))
+            {
+                <a href="/Home"><img class="logo pull-left" src="@currentUser.LogoPath" alt="Logo"></a>
+            }
+            }
             <h1><a @{if (loggedIn) { <text>style="color: @currentUser.TextColor;"</text> } } href="/Home">
                 @{if (loggedIn) {<text>@currentUser.TenantName Project Manager</text>}else {<text>SaaS Project Manager</text>}}
 
