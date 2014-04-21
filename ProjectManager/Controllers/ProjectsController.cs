@@ -146,6 +146,15 @@ namespace ProjectManager.Controllers
             project.Start = (newProject.Start != null) ? newProject.Start : DateTime.Now.Date;
             project.ExpectedEnd = (newProject.ExpectedEnd != null) ? newProject.ExpectedEnd : DateTime.Now.AddMonths(1);
             project.Status = 1;
+
+            //Check if the user put the start date after the end date, and swap if so
+            if (project.Start.Value.CompareTo(project.ExpectedEnd.Value) > 0)
+            {
+                var start = project.Start;
+                project.Start = project.ExpectedEnd;
+                project.ExpectedEnd = start;
+            }
+
             using (var db = new DataClassesDataContext())
             {
                 db.Projects.InsertOnSubmit(project);
@@ -231,14 +240,25 @@ namespace ProjectManager.Controllers
                                select p).FirstOrDefault();
                 
                 //Check to make sure user actually input values
+
                 project.Name = (!string.IsNullOrWhiteSpace(projectToModify.Name)) ? projectToModify.Name : "(Untitled Project)";
                 if (projectToModify.RawDateStart != null && projectToModify.RawDateStart != DateTime.MinValue)
                     project.Start = projectToModify.RawDateStart;
                 if (projectToModify.RawDateEnd != null && projectToModify.RawDateEnd != DateTime.MinValue)
                     project.ExpectedEnd = projectToModify.RawDateEnd;
 
+                //Check if the start date occurs after the end date, and swap them if so
+                if (project.Start.Value.CompareTo(project.ExpectedEnd.Value) > 0)
+                {
+                    var start = project.Start;
+                    project.Start = project.ExpectedEnd;
+                    project.ExpectedEnd = start;
+                }
+
                 if (projectToModify.StatusId > 0)
                     project.Status = projectToModify.StatusId;
+
+                project.ManagerId = projectToModify.ManagerId;
 
                 //project.ManagerId = projectToModify.ManagerId;
                 db.SubmitChanges();

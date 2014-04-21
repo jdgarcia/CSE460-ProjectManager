@@ -60,7 +60,7 @@ namespace ProjectManager.Controllers
             if (!Auth.GetCurrentUser().IsAdmin)
             {
                 // TODO: need to add proper error message handling/display
-                return View("You do not have permisions to do that");
+                return View("PermissionsError");
             }
             
             using (var db = new DataClassesDataContext())
@@ -85,7 +85,7 @@ namespace ProjectManager.Controllers
         public ActionResult EditUser(int id)
         {
             if (!Auth.GetCurrentUser().IsAdmin)
-                return View("You do not have permissions to do that");
+                return View("PermissionsError");
 
             DataClassesDataContext db = new DataClassesDataContext();
             User user = (from u in db.Users
