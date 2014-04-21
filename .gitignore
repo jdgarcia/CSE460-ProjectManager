@@ -16,3 +16,6 @@ bld/
 # SQL Server files
 *.mdf
 *.ldf
+
+# Uploaded logos
+*/Logos/*
