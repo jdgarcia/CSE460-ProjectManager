@@ -50,6 +50,7 @@ namespace ProjectManager.Controllers
                     tenant.LogoPath = "/Logos/logo1.jpg";
                     tenant.BannerColor = OnlyHexInString(newTenant.BannerColor) ? newTenant.BannerColor : "#357ebd";
                     tenant.TextColor = OnlyHexInString(newTenant.TextColor) ? newTenant.TextColor : "#FFFFFF";
+                    tenant.CustomTypes = newTenant.CustomTypes;
 
                     User user = new User();
                     user.Username = newTenant.AdminUsername;
