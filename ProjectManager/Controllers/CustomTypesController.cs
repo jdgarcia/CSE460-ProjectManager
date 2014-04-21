@@ -73,6 +73,31 @@ namespace ProjectManager.Controllers
         }
 
         //
+        // GET: /CustomTypes/Details/{id}
+
+        public ActionResult Details(int id)
+        {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            if (!Auth.IsUsingCustomTypes())
+            {
+                return RedirectToAction("Index");
+            }
+
+            RequirementType rType = DbUtils.GetRequirementTypeById(id);
+
+            if (rType == null)
+            {
+                ViewBag.Page = "CustomTypes";
+                return View("NotFound");
+            }
+
+            return View(new RequirementTypeContext(rType));
+        }
+
+        //
         // GET: /CustomTypes/Edit/{id}
 
         public ActionResult Edit(int id)
