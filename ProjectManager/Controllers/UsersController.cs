@@ -74,6 +74,11 @@ namespace ProjectManager.Controllers
                 return RedirectToAction("Index");
             }
 
+            if (string.IsNullOrWhiteSpace(newUser.Username) || string.IsNullOrWhiteSpace(newUser.Password))
+            {
+                return RedirectToAction("Create");
+            }
+
             using (var db = new DataClassesDataContext())
             {
                 var existingUser = (from u in db.Users
