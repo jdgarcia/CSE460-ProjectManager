@@ -142,9 +142,9 @@ namespace ProjectManager.Controllers
             Project project = new Project();
             project.TenantId = Auth.GetCurrentUser().TenantId;
             project.ManagerId = Auth.GetCurrentUser().UserId;
-            project.Name = newProject.Name;
-            project.Start = newProject.Start;
-            project.ExpectedEnd = newProject.ExpectedEnd;
+            project.Name = (!string.IsNullOrWhiteSpace(newProject.Name)) ? newProject.Name : "(Untitled Project)";
+            project.Start = (newProject.Start != null) ? newProject.Start : DateTime.Now.Date;
+            project.ExpectedEnd = (newProject.ExpectedEnd != null) ? newProject.ExpectedEnd : DateTime.Now.AddMonths(1);
             project.Status = 1;
             using (var db = new DataClassesDataContext())
             {
@@ -231,11 +231,10 @@ namespace ProjectManager.Controllers
                                select p).FirstOrDefault();
                 
                 //Check to make sure user actually input values
-                if (projectToModify.Name != null)
-                    project.Name = projectToModify.Name;
-                if (projectToModify.RawDateStart != null)
+                project.Name = (!string.IsNullOrWhiteSpace(projectToModify.Name)) ? projectToModify.Name : "(Untitled Project)";
+                if (projectToModify.RawDateStart != null && projectToModify.RawDateStart != DateTime.MinValue)
                     project.Start = projectToModify.RawDateStart;
-                if (projectToModify.RawDateEnd != null)
+                if (projectToModify.RawDateEnd != null && projectToModify.RawDateEnd != DateTime.MinValue)
                     project.ExpectedEnd = projectToModify.RawDateEnd;
 
                 if (projectToModify.StatusId > 0)

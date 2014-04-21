@@ -31,7 +31,7 @@ namespace ProjectManager.Models
         {
             this.TenantId = project.TenantId;
             this.ProjectId = project.ProjectId;
-            this.Name = project.Name;
+            this.Name = project.Name.Trim();
             this.RawDateStart = (DateTime)project.Start;
             this.RawDateEnd = (DateTime)project.ExpectedEnd;
             this.StatusId = project.Status;
