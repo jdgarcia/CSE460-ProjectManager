@@ -70,5 +70,48 @@ namespace ProjectManager.Controllers
 
             return RedirectToAction("Index");
         }
+
+        //
+        // POST: /Admin/ChangeColors
+
+        [HttpPost]
+        public ActionResult ChangeColors(string bannerColor, string textColor)
+        {
+            if (!Auth.IsLoggedIn() || !Auth.GetCurrentUser().IsAdmin)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            bool changeBanner = !String.IsNullOrWhiteSpace(bannerColor) && bannerColor != Auth.GetCurrentUser().BannerColor;
+            bool changeText = !String.IsNullOrWhiteSpace(textColor) && bannerColor != Auth.GetCurrentUser().TextColor;
+
+            if (!changeBanner && !changeText)
+            {
+                return RedirectToAction("Index");
+            }
+
+            if (changeBanner && !TenantController.OnlyHexInString(bannerColor)) 
+            {
+                return View("Error with color");
+            }
+            else if (changeText && !TenantController.OnlyHexInString(textColor))
+            {
+                return View("Error with color");
+            }
+
+            using (var db = new DataClassesDataContext())
+            {
+                Tenant tenant = (from t in db.Tenants
+                                 where t.TenantId == Auth.GetCurrentUser().TenantId
+                                 select t).FirstOrDefault();
+
+                if (changeBanner) tenant.BannerColor = bannerColor;
+                if (changeText) tenant.TextColor = textColor;
+
+                db.SubmitChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
