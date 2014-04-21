@@ -59,6 +59,9 @@ namespace ProjectManager.Controllers
             }
         }
 
+        //
+        // GET: /Requirements/Create
+
         public ActionResult Create()
         {
             if (!Auth.IsLoggedIn())
@@ -68,6 +71,9 @@ namespace ProjectManager.Controllers
 
             return View();
         }
+
+        //
+        // POST: /Requirements/Create
 
         [HttpPost]
         public ActionResult Create(RequirementContext newRequirement)
@@ -107,6 +113,86 @@ namespace ProjectManager.Controllers
                 db.SubmitChanges();
             }
 
+            return RedirectToAction("Index");
+        }
+    
+    
+        //
+        // GET: /Requirements/Edit/{id}
+
+        public ActionResult Edit(int id)
+        {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            RequirementContext requirementContext = null;
+
+            using (var db = new DataClassesDataContext())
+            {
+                Requirement requirement = (from r in db.Requirements
+                                   where r.TenantId == Auth.GetCurrentUser().TenantId && r.RequirementId == id
+                                   select r).FirstOrDefault();
+                if (requirement != null)
+                {
+                    requirementContext = new RequirementContext(requirement);
+                }
+            }
+
+            if (requirementContext == null)
+            {
+                return View("NotFound");
+            }
+
+            return View(requirementContext);
+        }
+
+        //
+        // POST: /Projects/Edit
+        
+        [HttpPost]
+        public ActionResult Edit(RequirementContext requirementToModify)
+        {
+
+            using (var db = new DataClassesDataContext())
+            {
+                var requirement = (from r in db.Requirements
+                               where r.RequirementId == requirementToModify.RequirementId
+                               select r).FirstOrDefault();
+                
+                //Check to make sure user actually input values
+
+                if (!string.IsNullOrWhiteSpace(requirementToModify.Description) && requirement.Description != requirementToModify.Description) 
+                    requirement.Description = requirementToModify.Description;
+                
+                if (requirement.Time != requirementToModify.Time && requirementToModify.Time != 0)
+                    requirement.Time = requirementToModify.Time;
+                
+                if (requirementToModify.AssignedUser != null && requirement.AssignedUser != requirementToModify.AssignedUserId)
+                    requirement.AssignedUser = requirementToModify.AssignedUserId;
+
+                if (requirementToModify.StatusId > 0)
+                    requirement.Status = requirementToModify.StatusId;
+
+                if (requirementToModify.TypeId > 0)
+                    requirement.TypeId = requirementToModify.TypeId;
+
+                // if assigned to different project
+                // remove any it was assigned to and assign to new one.
+                // enforces 1->many relationship between projects and requirements
+                if (requirementToModify.ProjectId != 0 && requirementToModify.ProjectId != requirement.ProjectRequirements.FirstOrDefault().ProjectId)
+                {
+                    requirement.ProjectRequirements.Clear();
+                    requirement.ProjectRequirements.Add(new ProjectRequirement()
+                    {
+                        ProjectId = requirementToModify.ProjectId,
+                        Requirement = requirement
+                    });
+                }
+
+                db.SubmitChanges();
+            }
             return RedirectToAction("Index");
         }
     }

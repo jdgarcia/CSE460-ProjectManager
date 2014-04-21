@@ -13,6 +13,7 @@ namespace ProjectManager.Models
         public int Time { get; set; }
         public int StatusId { get; set; }
         public int TypeId { get; set; }
+        public int? AssignedUserId { get; set; }
 
         public string Type { get; set; } 
         public string Status { get; set; }
@@ -36,6 +37,7 @@ namespace ProjectManager.Models
             this.Description = requirement.Description;
             this.StatusId = requirement.Status;
             this.TypeId = requirement.TypeId;
+            this.AssignedUserId = requirement.AssignedUser;
 
             this.Type = requirement.RequirementType.Name;
             this.Status = requirement.Status1.Name;
