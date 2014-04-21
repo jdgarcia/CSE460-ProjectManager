@@ -72,5 +72,22 @@ namespace ProjectManager.Utils
 
             return items;
         }
+
+        public static List<SelectListItem> GetManagedProjectSelectItems()
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            using (var db = new DataClassesDataContext())
+            {
+                var currentUser = Auth.GetCurrentUser();
+                var projects = db.Projects.Where(p => p.TenantId == currentUser.TenantId && p.ManagerId == currentUser.UserId);
+                foreach (Project project in projects)
+                {
+                    items.Add(new SelectListItem { Value = project.ProjectId.ToString(), Text = project.Name });
+                }
+            }
+
+            return items;
+        }
     }
 }

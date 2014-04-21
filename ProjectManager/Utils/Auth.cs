@@ -70,26 +70,6 @@ namespace ProjectManager.Utils
             return (GetCurrentUser() != null);
         }
 
-        public static List<Models.Project> GetManagedProjects()
-        {
-            List<Project> projects = new List<Project>();
-            int tID = GetCurrentUser().TenantId;
-            int uID = GetCurrentUser().UserId;
-            using (var db = new DataClassesDataContext())
-            {
-                var result = (from p in db.Projects
-                              where p.TenantId == tID
-                              && p.ManagerId == uID
-                              select p);
-
-                foreach (var proj in result)
-                {
-                    projects.Add(proj);
-                }
-            }
-            return projects;
-        }
-
         public static CurrentUserContext GetCurrentUser()
         {
             CurrentUserContext user = (CurrentUserContext)HttpContext.Current.Session["CurrentUser"];
