@@ -86,7 +86,11 @@ namespace ProjectManager.Controllers
                     user.TenantId = Auth.GetCurrentUser().TenantId;
                     user.Username = newUser.Username;
                     user.Password = Auth.GetPasswordHash(newUser.Password);
-                    user.RoleId = 5;    // default to GLOBAL.Employee for now
+                    user.RoleId = newUser.RoleId > 0 ? newUser.RoleId : 5;    // default to GLOBAL.Employee for now
+
+                    user.Role = (from r in db.Roles
+                                 where r.RoleId == user.RoleId
+                                 select r).FirstOrDefault();
 
                     db.Users.InsertOnSubmit(user);
                     db.SubmitChanges();
