@@ -47,7 +47,7 @@
                     @{ if (!IsManager && !IsAdmin)
                     {
                         @Html.DropDownListFor(s => requirement.StatusId,
-                                              ProjectManager.Utils.DbUtils.GetStatusSelectItems(),
+                                              new SelectList(requirement.StatusList, "StatusId", "Name", requirement.StatusId),
                                               new { id = "status", @class = "form-control", data_reqId = requirement.RequirementId })
                     }
                     else
@@ -78,6 +78,10 @@
                 }
             }).done(function (result) {
                 // result is { success: bool }
+                if (result.success) {
+                    $target.attr('disabled', 'disabled');
+                    window.location.reload();
+                }
             });
         });
     });
