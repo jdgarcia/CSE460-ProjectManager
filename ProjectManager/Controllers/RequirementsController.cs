@@ -93,6 +93,16 @@ namespace ProjectManager.Controllers
                 return RedirectToAction("Login", "Home");
             }
 
+            if (DbUtils.GetProjects().Count == 0)
+            {
+                return View("NoProjects");
+            }
+
+            if (DbUtils.GetUserSelectItems().Count == 0)
+            {
+                return View("NoUsers");
+            }
+
             return View();
         }
 
@@ -101,39 +111,49 @@ namespace ProjectManager.Controllers
 
         [HttpPost]
         public ActionResult Create(RequirementContext newRequirement)
-        {            
+        {
+            bool success = false;
+
             using (var db = new DataClassesDataContext())
             {
                 User user = (from u in db.Users
                              where u.TenantId == Auth.GetCurrentUser().TenantId
                              && u.UserId == newRequirement.AssignedUserId
                              select u).FirstOrDefault();
-                
-                Requirement requirement = new Requirement();
-                requirement.Description = !String.IsNullOrWhiteSpace(newRequirement.Description) ? newRequirement.Description : "";
-                requirement.Status = newRequirement.StatusId != 0 ? newRequirement.StatusId : 1;    // Defaults to "Not Started"
-                requirement.User = user;    // defaults to current user if none specified
-                requirement.TypeId = newRequirement.TypeId;
-                requirement.Time = newRequirement.Time;
-                requirement.TenantId = Auth.GetCurrentUser().TenantId;
-
-                db.Requirements.InsertOnSubmit(requirement);
 
                 Project project = (from p in db.Projects
-                             where p.ProjectId == newRequirement.ProjectId
-                             && p.TenantId == Auth.GetCurrentUser().TenantId
-                             select p).FirstOrDefault();
+                                   where p.ProjectId == newRequirement.ProjectId
+                                   && p.TenantId == Auth.GetCurrentUser().TenantId
+                                   select p).FirstOrDefault();
 
-                ProjectRequirement pr = new ProjectRequirement()
+                if (user != null && project != null)
                 {
-                    Project = project,
-                    Requirement = requirement,
-                    TenantId = project.TenantId
-                };
+                    Requirement requirement = new Requirement();
+                    requirement.Description = !String.IsNullOrWhiteSpace(newRequirement.Description) ? newRequirement.Description : "";
+                    requirement.Status = newRequirement.StatusId != 0 ? newRequirement.StatusId : 1;    // Defaults to "Not Started"
+                    requirement.User = user;    // defaults to current user if none specified
+                    requirement.TypeId = newRequirement.TypeId;
+                    requirement.Time = newRequirement.Time;
+                    requirement.TenantId = Auth.GetCurrentUser().TenantId;
 
-                db.ProjectRequirements.InsertOnSubmit(pr);
+                    db.Requirements.InsertOnSubmit(requirement);
 
-                db.SubmitChanges();
+                    ProjectRequirement pr = new ProjectRequirement()
+                    {
+                        Project = project,
+                        Requirement = requirement,
+                        TenantId = project.TenantId
+                    };
+
+                    db.ProjectRequirements.InsertOnSubmit(pr);
+                    db.SubmitChanges();
+                    success = true;
+                }
+            }
+
+            if (!success)
+            {
+                return View();
             }
 
             return RedirectToAction("Index");
