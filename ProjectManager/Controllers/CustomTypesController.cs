@@ -19,7 +19,6 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-
             if (!Auth.IsUsingCustomTypes())
             {
                 return View("AccessDenied");
@@ -28,5 +27,38 @@ namespace ProjectManager.Controllers
             return View(DbUtils.GetCustomTypes());
         }
 
+        //
+        // GET: /CustomTypes/Create
+
+        public ActionResult Create()
+        {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            if (!Auth.IsUsingCustomTypes())
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        //
+        // GET: /CustomTypes/Edit/{id}
+
+        public ActionResult Edit(int id)
+        {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            if (!Auth.IsUsingCustomTypes())
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
     }
 }

@@ -283,6 +283,8 @@
     <Content Include="Views\Requirements\NoProjects.cshtml" />
     <Content Include="Views\Requirements\NoUsers.cshtml" />
     <Content Include="Views\CustomTypes\Index.cshtml" />
+    <Content Include="Views\CustomTypes\Create.cshtml" />
+    <Content Include="Views\CustomTypes\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
