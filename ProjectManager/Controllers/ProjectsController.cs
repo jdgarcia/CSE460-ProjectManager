@@ -266,5 +266,24 @@ namespace ProjectManager.Controllers
             return RedirectToAction("Index");
         }
 
+        //
+        // GET: /Requirements/UpdateStatus/{id}
+
+        public ActionResult UpdateStatus(int id, int newStatus)
+        {
+            bool success = false;
+            using (var db = new DataClassesDataContext())
+            {
+                Project project = db.Projects.Where(p => p.TenantId == Auth.GetTenantId() && p.ProjectId == id).FirstOrDefault();
+                if (project != null)
+                {
+                    project.Status = newStatus;
+                    db.SubmitChanges();
+                    success = true;
+                }
+            }
+
+            return Json(new { success = success }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

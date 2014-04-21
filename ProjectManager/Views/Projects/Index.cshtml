@@ -45,7 +45,19 @@
                 <td>@project.Start</td>
                 <td>@project.ExpectedEnd</td>
                 <td>@project.Manager</td>
-                <td>@project.Status</td>
+                <td>
+                    @{ if (ProjectManager.Utils.Auth.IsManager())
+                       {
+                        @Html.DropDownListFor(s => project.StatusId,
+                                  new SelectList(ProjectManager.Utils.DbUtils.GetStatuses(), "StatusId", "Name", project.StatusId),
+                                  new { id = "status", @class = "form-control", data_projId = project.ProjectId })
+                       }
+                       else
+                       {
+                        <text>@project.Status</text>
+                       }
+                    }
+                </td>
                 @{if (ProjectManager.Utils.Auth.GetCurrentUser().IsManager)
                   {<td><a href="/Projects/Edit/@project.ProjectId" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td>}
                 }
@@ -55,3 +67,26 @@
     }
 }
 
+<script>
+    $(document).ready(function () {
+        $('.projects select').change(function (event) {
+            var $target = $(event.target);
+            var projId = $target.data('projid');
+            var statusId = $target.val();
+            
+            $.ajax({
+                url: "/Projects/UpdateStatus",
+                data: {
+                    id: projId,
+                    newStatus: statusId,
+                }
+            }).done(function (result) {
+                // result is { success: bool }
+                if (result.success) {
+                    $target.attr('disabled', 'disabled');
+                    window.location.reload();
+                }
+            });
+        });
+    });
+</script>

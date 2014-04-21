@@ -9,6 +9,16 @@ namespace ProjectManager.Utils
 {
     public class DbUtils
     {
+        public static Project GetProjectById(int id)
+        {
+            Project target = null;
+            using (var db = new DataClassesDataContext())
+            {
+                target = db.Projects.Where(p => p.TenantId == Auth.GetTenantId() && p.ProjectId == id).FirstOrDefault();
+            }
+
+            return target;
+        }
         public static Requirement GetRequirementById(int id)
         {
             Requirement target = null;
@@ -41,6 +51,18 @@ namespace ProjectManager.Utils
             }
 
             return projects;
+        }
+
+        public static List<Status> GetStatuses()
+        {
+            List<Status> statuses = new List<Status>();
+
+            using (var db = new DataClassesDataContext())
+            {
+                statuses = db.Status.Where(s => s.TenantId == 1 || s.TenantId == Auth.GetTenantId()).ToList();
+            }
+
+            return statuses;
         }
 
         public static List<RequirementType> GetCustomTypes()
