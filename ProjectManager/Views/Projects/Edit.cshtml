@@ -5,41 +5,44 @@
     ViewBag.Page = "Projects";
 }
 
-<h2>Edit</h2>
+<h2>Edit Project</h2>
 
-<form action="/Projects/Edit" method="post">
+<form action="/Projects/Edit" method="post" class="form-horizontal">
     <input type="hidden" name ="ProjectId" value="@Model.ProjectId" />
     <input type="hidden" name ="TenantId" value="@Model.TenantId" />
-    <label for="oldProjName">Old Project Name: @Model.Name</label>
-    <br />
-    <label for="newProjName">New Project Name: </label>
-    <input type="text" id="projectName" name="Name" value="@Model.Name"  />
-    <br />
-    <br />
 
-    <label for="oldStartTime">Old Project Start Date: @Model.Start.ToString().Substring(0,10)</label>
-    <br />
-    <label for="newStartTime">New Project Start Date:</label>
-    <input type="date" id="startDate" name="RawDateStart" value="@Model.RawDateStart.Date" />
-    <input type="hidden" id="hiddenStartDate" name="Start" value="@Model.RawDateStart"
-    <br />
-    <br />
+    <div class="form-group">
+        <label for="projectName" class="col-sm-2">Project Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="projectName" name="Name" placeholder="(Untitled Project)" value="what" autofocus="autofocus" />
+        </div>
+    </div>
 
-    <label for="oldEndTime">Old Project End Date: @Model.ExpectedEnd.ToString().Substring(0,10)</label>
-    <br />
-    <label for="newEndTime">New Project End Date</label>
-    <input type="date" id="endDate" name="RawDateEnd" value="@Model.RawDateEnd.Date" />
-    <input type="hidden" id="hiddenEndDate" name="ExpectedEnd" value="@Model.RawDateEnd"
-    <br />
-    <br />
+    <div class="form-group">
+        <label for="startDate" class="col-sm-2">Project Start Date</label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" id="startDate" name="RawDateStart" value="@Model.RawDateStart.ToString("yyyy-MM-dd")"/>
+        </div>
+    </div>
 
-    <label for="oldStatus">Old Project Status: @Model.Status </label>
-    <br />
-    <label for="newStatus">New Project Status: </label>
-    @Html.DropDownListFor(s => Model.StatusId, new SelectList(@Model.StatusList, "StatusId", "Name"));
-    <br />
-    <br />
+    <div class="form-group">
+        <label for="endDate" class="col-sm-2">Project End Date</label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" id="endDate" name="RawDateEnd" value="@Model.RawDateEnd.ToString("yyyy-MM-dd")"/>
+        </div>
+    </div>
 
-    <input type="submit" value="Save Changes" class="btn btn-primary" />
-    <a href="/Projects" class="btn btn-default">Discard Changes</a>
+    <div class="form-group">
+        <label for="status" class="col-sm-2">Project Status</label>
+        <div class="col-sm-10">
+            @Html.DropDownListFor(s => Model.StatusId, new SelectList(@Model.StatusList, "StatusId", "Name"), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" value="Save Changes" class="btn btn-primary" />
+            <a href="/Projects" class="btn btn-default">Discard Changes</a>
+        </div>
+    </div>
 </form>

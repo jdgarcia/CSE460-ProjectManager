@@ -5,19 +5,34 @@
     ViewBag.Page = "Projects";
 }
 
-<h2>Create</h2>
+<h2>Create Project</h2>
 
-<form action="/Projects/Create" method="post">
-    <label for="projName">Project Name</label>
-    <input type="text" id="projectName" name="Name" autofocus="autofocus" />
-    <br />
-    <label for="startTime">Project Start Date</label>
-    <input type="date" id="startDate" name="Start" />
-    <br />
-    <label for="endTime">Project End Date</label>
-    <input type="date" id="endDate" name="ExpectedEnd" />
-    <br />
-    <br />
-    <input type="submit" value="Create Project" class="btn btn-primary" />
-    <a href="/Projects" class="btn btn-default">Cancel</a>
+<form action="/Projects/Create" method="post" class="form-horizontal">
+    <div class="form-group">
+        <label for="projectName" class="col-sm-2">Project Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="projectName" name="Name" placeholder="(Untitled Project)" autofocus="autofocus" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="startDate" class="col-sm-2">Project Start Date</label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" id="startDate" name="Start" value="@DateTime.Now.Date.ToString("yyyy-MM-dd")"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="endDate" class="col-sm-2">Project End Date</label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" id="endDate" name="ExpectedEnd" value="@DateTime.Now.AddMonths(1).ToString("yyyy-MM-dd")"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" value="Create Project" class="btn btn-primary" />
+            <a href="/Projects" class="btn btn-default">Cancel</a>
+        </div>
+    </div>
 </form>
