@@ -1,0 +1,40 @@
+﻿@model List<ProjectManager.Models.RequirementContext>
+
+@{
+    ViewBag.Title = "Index";
+    ViewBag.Page = "Requirements";
+}
+
+<h2>Requirements</h2>
+
+@{  
+    if (Model.Count == 0)
+    {
+        <p>No results found.</p>
+    }
+    else
+    {
+        <table class="projects">
+            <thead>
+                <tr>
+                    <td>Description</td>
+                    <td>Type</td>
+                    <td>Time Expected (hrs.)</td>
+                    <td>Assigned User</td>
+                    <td>Status</td>
+                    <td></td>
+                </tr>
+            </thead>
+        @foreach (var requirement in Model)
+        {
+            <tr>
+                <td>@requirement.Description</td>
+                <td>@requirement.Type</td>
+                <td>@requirement.Time</td>
+                <td>@requirement.AssignedUser</td>
+                <td>@requirement.Status</td>
+            </tr>
+        }
+        </table>
+    }
+}
