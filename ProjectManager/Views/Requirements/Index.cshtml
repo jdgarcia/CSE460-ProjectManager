@@ -3,11 +3,15 @@
 @{
     ViewBag.Title = "Index";
     ViewBag.Page = "Requirements";
+    var IsManager = ProjectManager.Utils.Auth.GetCurrentUser().IsManager;
+    var IsAdmin = ProjectManager.Utils.Auth.GetCurrentUser().IsAdmin;
 }
 
 <h2>Requirements</h2>
 
-@{if(ProjectManager.Utils.Auth.GetCurrentUser().IsManager){
+
+
+@{if(IsManager){
       <a href="/Requirements/Create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Requirement</a>
 }}
 
@@ -39,7 +43,24 @@
                 <td>@requirement.Type</td>
                 <td>@requirement.Time</td>
                 <td>@requirement.AssignedUser</td>
-                <td>@requirement.Status</td>
+                <td>
+                    @{ if (!IsManager && !IsAdmin)
+                       {
+                           
+                                    <div class="form-group">
+                                        <div class="col-sm-10">
+                                            @Html.DropDownListFor(s => requirement.StatusId,
+                                                                  ProjectManager.Utils.DbUtils.GetStatusSelectItems(),
+                                                                  new { id = "status", @class = "form-control" })
+                                        </div>
+                                    </div>
+                       }
+                       else
+                       {
+                           <text>@requirement.Status</text>
+                       }
+                    }
+                </td>
                 <td><a class="project-name" href="/Projects/Details/@requirement.ProjectId">@requirement.ProjectName</a></td>
             </tr>
         }
