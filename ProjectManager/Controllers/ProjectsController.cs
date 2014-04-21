@@ -58,8 +58,8 @@ namespace ProjectManager.Controllers
                 return View(projects);
             }
             else
-                //Will be replaced with viewing requirements, once those are available
-                return View("NotFound");
+                // employees just view their assigned requirements, not list of projects
+                return RedirectToAction("Index", "Requirements");
 
         }
 
