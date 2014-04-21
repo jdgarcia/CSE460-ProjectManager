@@ -127,5 +127,20 @@ namespace ProjectManager.Utils
 
             return items;
         }
+
+        public static bool InsertRequirementType(RequirementType rType)
+        {
+            bool success = false;
+            rType.TenantId = Auth.GetTenantId();
+
+            using (var db = new DataClassesDataContext())
+            {
+                db.RequirementTypes.InsertOnSubmit(rType);
+                db.SubmitChanges();
+                success = true;
+            }
+
+            return success;
+        }
     }
 }

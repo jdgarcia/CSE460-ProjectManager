@@ -44,6 +44,33 @@ namespace ProjectManager.Controllers
             return View();
         }
 
+        // POST: /CustomType/Create
+
+        [HttpPost]
+        public ActionResult Create(string typeName)
+        {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            if (!Auth.IsUsingCustomTypes())
+            {
+                return RedirectToAction("Index");
+            }
+
+            if (string.IsNullOrWhiteSpace(typeName))
+            {
+                return View();
+            }
+
+            RequirementType newType = new RequirementType();
+            newType.Name = typeName;
+
+            DbUtils.InsertRequirementType(newType);
+
+            return RedirectToAction("Index");
+        }
+
         //
         // GET: /CustomTypes/Edit/{id}
 
