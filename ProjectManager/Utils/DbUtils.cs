@@ -14,7 +14,18 @@ namespace ProjectManager.Utils
             Requirement target = null;
             using (var db = new DataClassesDataContext())
             {
-                target = db.Requirements.Where(r => r.TenantId == Auth.GetCurrentUser().TenantId && r.RequirementId == id).FirstOrDefault();
+                target = db.Requirements.Where(r => r.TenantId == Auth.GetTenantId() && r.RequirementId == id).FirstOrDefault();
+            }
+
+            return target;
+        }
+
+        public static RequirementType GetRequirementTypeById(int id)
+        {
+            RequirementType target = null;
+            using (var db = new DataClassesDataContext())
+            {
+                target = db.RequirementTypes.Where(t => t.TenantId == Auth.GetTenantId() && t.TypeId == id).FirstOrDefault();
             }
 
             return target;

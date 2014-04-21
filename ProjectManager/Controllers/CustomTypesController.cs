@@ -85,7 +85,15 @@ namespace ProjectManager.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View();
+            RequirementType rType = DbUtils.GetRequirementTypeById(id);
+
+            if (rType == null)
+            {
+                ViewBag.Page = "CustomTypes";
+                return View("NotFound");
+            }
+
+            return View(rType);
         }
     }
 }

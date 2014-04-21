@@ -285,6 +285,7 @@
     <Content Include="Views\CustomTypes\Index.cshtml" />
     <Content Include="Views\CustomTypes\Create.cshtml" />
     <Content Include="Views\CustomTypes\Edit.cshtml" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
