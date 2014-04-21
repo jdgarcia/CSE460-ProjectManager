@@ -87,11 +87,11 @@ namespace ProjectManager.Controllers
 
             if (changeBanner && !TenantController.OnlyHexInString(bannerColor)) 
             {
-                return View("Error with color");
+                return RedirectToAction("Index");
             }
             else if (changeText && !TenantController.OnlyHexInString(textColor))
             {
-                return View("Error with color");
+                return RedirectToAction("Index");
             }
 
             using (var db = new DataClassesDataContext())
