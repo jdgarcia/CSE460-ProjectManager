@@ -13,10 +13,14 @@ namespace ProjectManager.Models
         public int Time { get; set; }
         public int StatusId { get; set; }
         public int TypeId { get; set; }
+        public int? AssignedUserId { get; set; }
 
         public string Type { get; set; } 
         public string Status { get; set; }
         public string AssignedUser { get; set; }
+
+        public int ProjectId { get; set; }
+        public string ProjectName { get; set; }
 
         // store Statuses that the project is allowed to take on
         public List<ProjectManager.Models.Status> StatusList { get; set; }
@@ -33,6 +37,7 @@ namespace ProjectManager.Models
             this.Description = requirement.Description;
             this.StatusId = requirement.Status;
             this.TypeId = requirement.TypeId;
+            this.AssignedUserId = requirement.AssignedUser;
 
             this.Type = requirement.RequirementType.Name;
             this.Status = requirement.Status1.Name;
@@ -48,6 +53,16 @@ namespace ProjectManager.Models
             {
                 StatusList.Add(status);
             }
+
+            var project = (from r in db.Requirements
+                          join pr in db.ProjectRequirements on r.RequirementId equals pr.RequirementId
+                          join p in db.Projects on pr.ProjectId equals p.ProjectId
+                          where r.RequirementId == this.RequirementId && r.TenantId == this.TenantId
+                          select p).FirstOrDefault();
+            
+            this.ProjectId = project.ProjectId;
+            this.ProjectName = project.Name;
+
         }
     }
 }

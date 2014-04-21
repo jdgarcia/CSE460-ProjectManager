@@ -22,7 +22,7 @@
                     <td>Time Expected (hrs.)</td>
                     <td>Assigned User</td>
                     <td>Status</td>
-                    <td></td>
+                    <td>Project</td>
                 </tr>
             </thead>
         @foreach (var requirement in Model)
@@ -33,6 +33,7 @@
                 <td>@requirement.Time</td>
                 <td>@requirement.AssignedUser</td>
                 <td>@requirement.Status</td>
+                <td>@requirement.ProjectName</td>
             </tr>
         }
         </table>
