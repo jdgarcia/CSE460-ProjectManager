@@ -19,7 +19,13 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            return View();
+
+            if (!Auth.IsUsingCustomTypes())
+            {
+                return View("AccessDenied");
+            }
+
+            return View(DbUtils.GetCustomTypes());
         }
 
     }
