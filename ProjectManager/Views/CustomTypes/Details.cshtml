@@ -1,0 +1,47 @@
+﻿@model ProjectManager.Models.RequirementTypeContext
+
+@{
+    ViewBag.Title = "Details";
+    ViewBag.Page = "CustomTypes";
+}
+
+<h2>Custom Type: @Model.Name</h2>
+
+@{  
+    if (Model.MatchedProjects.Count == 0)
+    {
+        <p>No matching projects.</p>
+    }
+    else
+    {
+        <h3>Matched Projects</h3>
+    
+        <table class="projects">
+            <thead>
+                <tr>
+                    <td>Project Name</td>
+                    <td>Start Date</td>
+                    <td>Expected End Date</td>
+                    <td>Manager</td>
+                    <td>Status</td>
+                    @{if (ProjectManager.Utils.Auth.GetCurrentUser().IsManager)
+                      {<td></td>}
+                    }
+                </tr>
+            </thead>
+        @foreach (var project in Model.MatchedProjects)
+        {
+            <tr>
+                <td><a class="project-name" href="/Projects/Details/@project.ProjectId">@project.Name</a></td>
+                <td>@project.Start</td>
+                <td>@project.ExpectedEnd</td>
+                <td>@project.Manager</td>
+                <td>@project.Status</td>
+                @{if (ProjectManager.Utils.Auth.GetCurrentUser().IsManager)
+                  {<td><a href="/Projects/Edit/@project.ProjectId" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td>}
+                }
+            </tr>
+        }
+        </table>
+    }
+}

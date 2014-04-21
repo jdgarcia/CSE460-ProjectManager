@@ -27,7 +27,7 @@
         @foreach (var type in Model)
         {
             <tr>
-                <td>@type.Name</td>
+                <td><a class="project-name" href="/CustomTypes/Details/@type.TypeId">@type.Name</a></td>
                 <td><a href="/CustomTypes/Edit/@type.TypeId" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td>
             </tr>
         }

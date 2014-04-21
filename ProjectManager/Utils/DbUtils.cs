@@ -58,6 +58,26 @@ namespace ProjectManager.Utils
             return types;
         }
 
+        public static List<ProjectContext> GetProjectsByRequirementType(int rTypeId)
+        {
+            List<ProjectContext> projects = new List<ProjectContext>();
+
+            using (var db = new DataClassesDataContext())
+            {
+                var matchedProjects = (from r in db.Requirements
+                                        join pr in db.ProjectRequirements on r.RequirementId equals pr.RequirementId
+                                        join p in db.Projects on pr.ProjectId equals p.ProjectId
+                                        where r.RequirementType.TypeId == rTypeId
+                                        select p);
+                foreach (Project project in matchedProjects)
+                {
+                    projects.Add(new ProjectContext(project));
+                }
+            }
+
+            return projects;
+        }
+
         public static List<SelectListItem> GetRoleSelectItems()
         {
             List<SelectListItem> items = new List<SelectListItem>();
