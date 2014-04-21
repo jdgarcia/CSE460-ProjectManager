@@ -26,7 +26,13 @@ namespace ProjectManager.Controllers
         [HttpPost]
         public ActionResult Create(NewTenantContext newTenant, HttpPostedFileBase file)
         {
-            if (string.IsNullOrEmpty(newTenant.OrgName) || string.IsNullOrEmpty(newTenant.AdminUsername) || string.IsNullOrEmpty(newTenant.AdminPassword))
+            if (string.IsNullOrWhiteSpace(newTenant.OrgName) || string.IsNullOrWhiteSpace(newTenant.AdminUsername) ||
+                string.IsNullOrWhiteSpace(newTenant.AdminPassword) || string.IsNullOrWhiteSpace(newTenant.ConfirmPassword))
+            {
+                return View();
+            }
+
+            if (newTenant.AdminPassword != newTenant.ConfirmPassword)
             {
                 return View();
             }
