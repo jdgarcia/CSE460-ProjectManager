@@ -10,7 +10,7 @@ namespace ProjectManager.Models
         public int TenantId { get; set; }
         public int RequirementId { get; set; }
         public string Description { get; set; }
-        public int Time { get; set; }
+        public int? Time { get; set; }
         public int StatusId { get; set; }
         public int TypeId { get; set; }
         public int? AssignedUserId { get; set; }
@@ -35,6 +35,7 @@ namespace ProjectManager.Models
             this.TenantId = requirement.TenantId;
             this.RequirementId = requirement.RequirementId;
             this.Description = requirement.Description;
+            this.Time = requirement.Time;
             this.StatusId = requirement.Status;
             this.TypeId = requirement.TypeId;
             this.AssignedUserId = requirement.AssignedUser;
