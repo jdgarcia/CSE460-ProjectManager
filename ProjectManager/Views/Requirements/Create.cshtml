@@ -1,0 +1,45 @@
+﻿@model ProjectManager.Models.RequirementContext
+
+@{
+    ViewBag.Title = "Create";
+    ViewBag.Page = "Requirements";
+}
+
+<h2>Create Requirement</h2>
+
+<form action="/Requirements/Create" method="post" class="form-horizontal">
+    <div class="form-group">
+        <label for="requirmentDescription" class="col-sm-2">Description</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="requirementDescription" name="Description" autofocus="autofocus" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="time" class="col-sm-2">Time in Hours</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="time" name="Time" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="type" class="col-sm-2">Type</label>
+        <div class="col-sm-10">
+            @Html.DropDownListFor(s => Model.TypeId, new SelectList(ProjectManager.Utils.Auth.GetRequirementTypes(), "TypeId", "Name"), new { id = "type", @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="assignedUser" class="col-sm-2">Assigned User</label>
+        <div class="col-sm-10">
+            @Html.DropDownListFor(m => Model.AssignedUserId, new SelectList(ProjectManager.Utils.Auth.GetWorkers(), "UserId", "Username"), new { id = "worker", @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" value="Create Project" class="btn btn-primary" />
+            <a href="/Projects" class="btn btn-default">Cancel</a>
+        </div>
+    </div>
+</form>

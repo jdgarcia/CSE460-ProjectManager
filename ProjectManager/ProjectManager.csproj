@@ -277,6 +277,7 @@
     <Content Include="Views\Users\PermissionsError.cshtml" />
     <Content Include="Views\Requirements\Index.cshtml" />
     <Content Include="Views\Shared\AccessDenied.cshtml" />
+    <Content Include="Views\Requirements\Create.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
