@@ -93,6 +93,11 @@ namespace ProjectManager.Controllers
                 return RedirectToAction("Login", "Home");
             }
 
+            if (!Auth.IsManager())
+            {
+                return RedirectToAction("Index");
+            }
+
             if (DbUtils.GetProjects().Count == 0)
             {
                 return View("NoProjects");
