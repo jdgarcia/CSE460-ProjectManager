@@ -51,6 +51,7 @@ namespace ProjectManager.Utils
                 currentUser.TextColor = tenant.TextColor;
                 currentUser.TenantName = tenant.OrgName;
                 currentUser.LogoPath = tenant.LogoPath;
+                currentUser.UsingCustomTypes = tenant.CustomTypes;
             }
 
             HttpContext.Current.Session["CurrentUser"] = currentUser;
@@ -87,6 +88,7 @@ namespace ProjectManager.Utils
                 user.TextColor = tenant.TextColor;
                 user.BannerColor = tenant.BannerColor;
                 user.TenantName = tenant.OrgName;
+                user.UsingCustomTypes = tenant.CustomTypes;
             }
 
             return user;
@@ -110,6 +112,11 @@ namespace ProjectManager.Utils
         public static bool IsManager()
         {
             return ((CurrentUserContext)(HttpContext.Current.Session["CurrentUser"])).IsManager;
+        }
+
+        public static bool IsUsingCustomTypes()
+        {
+            return ((CurrentUserContext)(HttpContext.Current.Session["CurrentUser"])).UsingCustomTypes;
         }
 
         public static string GetPasswordHash(string password)

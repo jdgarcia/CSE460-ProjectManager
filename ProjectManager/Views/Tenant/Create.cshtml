@@ -7,58 +7,72 @@
 <h2>Register Organization</h2>
 
 <form action="/Tenant/Create" method="post" enctype="multipart/form-data" class="form-horizontal">
+    <h3>Account Details</h3>
+
     <div class="form-group">
-        <label for="orgName" class="col-sm-2">Organization Name</label>
-        <div class="col-sm-10">
+        <label for="orgName" class="col-sm-3">Organization Name</label>
+        <div class="col-sm-9">
             <input type="text" class="form-control" id="orgName" name="OrgName" autofocus="autofocus" />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="adminUsername" class="col-sm-2">Admin Username</label>
-        <div class="col-sm-10">
+        <label for="adminUsername" class="col-sm-3">Admin Username</label>
+        <div class="col-sm-9">
             <input type="text" class="form-control" id="adminUsername" name="AdminUsername" />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="adminPassword" class="col-sm-2">Admin Password</label>
-        <div class="col-sm-10">
+        <label for="adminPassword" class="col-sm-3">Admin Password</label>
+        <div class="col-sm-9">
             <input type="password" class="form-control" id="adminPassword" name="AdminPassword" />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="confirmPassword" class="col-sm-2">Confirm Password</label>
-        <div class="col-sm-10">
+        <label for="confirmPassword" class="col-sm-3">Confirm Password</label>
+        <div class="col-sm-9">
             <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" />
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="bannerColor" class="col-sm-2">Banner Color (hexadecimal)</label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control" id="bannerColor" name="BannerColor" placeholder="#357ebd (default)" maxlength="7" />
-        </div>
-    </div>
+    <h3>Branding (Optional)</h3>
 
     <div class="form-group">
-        <label for="textColor" class="col-sm-2">Text Color (hexadecimal)</label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control"  id="textColor" name="TextColor" placeholder="#FFFFFF (default)" maxlength="7" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="logo" class="col-sm-2">Logo (.jpg/.png/.gif)</label>
+        <label for="logo" class="col-sm-3">Logo (.jpg/.png/.gif)</label>
         <div class="col-sm-5">
             <input type="file" class="form-control btn btn-default" id="file" name="file" />
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <input type="submit" value="Register" class="btn btn-lg btn-primary" />
+        <label for="bannerColor" class="col-sm-3">Banner Color (hexadecimal)</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="bannerColor" name="BannerColor" placeholder="#357ebd (default)" maxlength="7" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="textColor" class="col-sm-3">Text Color (hexadecimal)</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control"  id="textColor" name="TextColor" placeholder="#FFFFFF (default)" maxlength="7" />
+        </div>
+    </div>
+
+    <h3>Services (Optional)</h3>
+
+    <div class="form-group">
+        <label for="customTypes" class="col-sm-3">Custom Types</label>
+        <div class="col-sm-9">
+            @Html.CheckBoxFor(t => t.CustomTypes, new { id = "customTypes" })
+            Yes, I want the ability to create custom types of project requirements.
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <input type="submit" value="Complete Registration" class="btn btn-lg btn-primary" />
         </div>
     </div>
 </form>

@@ -13,5 +13,6 @@ namespace ProjectManager.Models
         public string ConfirmPassword { get; set; }
         public string BannerColor { get; set; }
         public string TextColor { get; set; }
+        public bool CustomTypes { get; set; }
     }
 }

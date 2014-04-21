@@ -128,6 +128,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CustomTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\ProjectSearchController.cs" />
@@ -281,6 +282,9 @@
     <Content Include="Views\Requirements\Create.cshtml" />
     <Content Include="Views\Requirements\NoProjects.cshtml" />
     <Content Include="Views\Requirements\NoUsers.cshtml" />
+    <Content Include="Views\CustomTypes\Index.cshtml" />
+    <Content Include="Views\CustomTypes\Create.cshtml" />
+    <Content Include="Views\CustomTypes\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

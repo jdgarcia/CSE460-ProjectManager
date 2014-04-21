@@ -17,6 +17,8 @@ namespace ProjectManager.Models
         public string LogoPath { get; set; }
         public string BannerColor { get; set; }
         public string TextColor { get; set; }
+
+        public bool UsingCustomTypes { get; set; }
     }
 
     public class LoginContext

@@ -32,6 +32,21 @@ namespace ProjectManager.Utils
             return projects;
         }
 
+        public static List<RequirementType> GetCustomTypes()
+        {
+            List<RequirementType> types = new List<RequirementType>();
+
+            if (Auth.IsUsingCustomTypes())
+            {
+                using (var db = new DataClassesDataContext())
+                {
+                    types = db.RequirementTypes.Where(t => t.TenantId == Auth.GetTenantId()).ToList();
+                }
+            }
+
+            return types;
+        }
+
         public static List<SelectListItem> GetRoleSelectItems()
         {
             List<SelectListItem> items = new List<SelectListItem>();
