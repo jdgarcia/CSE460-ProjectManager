@@ -153,5 +153,23 @@ namespace ProjectManager.Utils
 
             return success;
         }
+
+        public static bool UpdateRequirementType(RequirementType rType)
+        {
+            bool success = false;
+
+            using (var db = new DataClassesDataContext())
+            {
+                var target = db.RequirementTypes.Where(t => t.TenantId == Auth.GetTenantId() && t.TypeId == rType.TypeId).FirstOrDefault();
+                if (target != null)
+                {
+                    target.Name = rType.Name;
+                    db.SubmitChanges();
+                    success = true;
+                }
+            }
+
+            return success;
+        }
     }
 }

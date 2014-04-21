@@ -44,6 +44,7 @@ namespace ProjectManager.Controllers
             return View();
         }
 
+        //
         // POST: /CustomType/Create
 
         [HttpPost]
@@ -94,6 +95,31 @@ namespace ProjectManager.Controllers
             }
 
             return View(rType);
+        }
+
+        //
+        // GET: /CustomTypes/Edit
+
+        [HttpPost]
+        public ActionResult Edit(RequirementType rType)
+        {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            if (!Auth.IsUsingCustomTypes())
+            {
+                return RedirectToAction("Index");
+            }
+
+            if (string.IsNullOrWhiteSpace(rType.Name))
+            {
+                return RedirectToAction("Edit", new { id = rType.TypeId });
+            }
+
+            DbUtils.UpdateRequirementType(rType);
+
+            return RedirectToAction("Index");
         }
     }
 }
