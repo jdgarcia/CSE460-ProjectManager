@@ -5,7 +5,7 @@
     ViewBag.Page = "Projects";
 }
 
-<h2>Project Details @{if(ProjectManager.Utils.Auth.GetCurrentUser().IsManager) {<a class="btn btn-sm btn-info" href="/Projects/Edit/@Model.ProjectId"><span class="glyphicon glyphicon-pencil"></span> Edit</a>}}</h2>
+<h2><a href="/Projects"><span class="glyphicon glyphicon-arrow-left"></span></a> Project Details @{if(ProjectManager.Utils.Auth.GetCurrentUser().IsManager) {<a class="btn btn-sm btn-info" href="/Projects/Edit/@Model.ProjectId"><span class="glyphicon glyphicon-pencil"></span> Edit</a>}}</h2>
 
 <table class="project-details">
     <tr>
