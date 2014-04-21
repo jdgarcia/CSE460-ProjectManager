@@ -101,6 +101,7 @@
       <Column Name="LogoPath" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="BannerColor" Type="System.String" DbType="VarChar(7) NOT NULL" CanBeNull="false" />
       <Column Name="TextColor" Type="System.String" DbType="VarChar(7) NOT NULL" CanBeNull="false" />
+      <Column Name="CustomTypes" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="Tenant_ProjectEmployee" Member="ProjectEmployees" ThisKey="TenantId" OtherKey="TenantId" Type="ProjectEmployee" />
       <Association Name="Tenant_ProjectRequirement" Member="ProjectRequirements" ThisKey="TenantId" OtherKey="TenantId" Type="ProjectRequirement" />
       <Association Name="Tenant_Project" Member="Projects" ThisKey="TenantId" OtherKey="TenantId" Type="Project" />
