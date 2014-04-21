@@ -45,7 +45,12 @@ namespace ProjectManager.Models
 
             foreach (var projReq in project.ProjectRequirements)
             {
-                Requirements.Add(new RequirementContext(projReq.Requirement));
+                CurrentUserContext user = ProjectManager.Utils.Auth.GetCurrentUser();
+                
+                if (user.IsManager || user.IsAdmin || user.UserId == projReq.Requirement.User.UserId)
+                {
+                    Requirements.Add(new RequirementContext(projReq.Requirement));    
+                }
             }
         }
     }
