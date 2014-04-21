@@ -101,14 +101,12 @@ namespace ProjectManager.Controllers
 
         [HttpPost]
         public ActionResult Create(RequirementContext newRequirement)
-        {
-            string username = !String.IsNullOrWhiteSpace(newRequirement.AssignedUser) ? newRequirement.AssignedUser : Auth.GetCurrentUser().Username;
-            
+        {            
             using (var db = new DataClassesDataContext())
             {
                 User user = (from u in db.Users
                              where u.TenantId == Auth.GetCurrentUser().TenantId
-                             && username == u.Username
+                             && u.UserId == newRequirement.AssignedUserId
                              select u).FirstOrDefault();
                 
                 Requirement requirement = new Requirement();

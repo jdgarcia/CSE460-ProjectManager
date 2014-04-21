@@ -9,16 +9,16 @@
 
 <form action="/Requirements/Create" method="post" class="form-horizontal">
     <div class="form-group">
-        <label for="requirmentDescription" class="col-sm-2">Description</label>
+        <label for="requirementDescription" class="col-sm-2">Description</label>
         <div class="col-sm-10">
             <input type="text" class="form-control" id="requirementDescription" name="Description" autofocus="autofocus" />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="time" class="col-sm-2">Time in Hours</label>
+        <label for="requirementTime" class="col-sm-2">Time in Hours</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="time" name="Time" />
+            <input type="text" class="form-control" id="requirementTime" name="Time" />
         </div>
     </div>
 
@@ -32,7 +32,7 @@
     <div class="form-group">
         <label for="assignedUser" class="col-sm-2">Assigned User</label>
         <div class="col-sm-10">
-            @Html.DropDownListFor(m => Model.AssignedUserId, new SelectList(ProjectManager.Utils.Auth.GetWorkers(), "UserId", "Username"), new { id = "worker", @class = "form-control" })
+            @Html.DropDownListFor(m => Model.AssignedUserId, new SelectList(ProjectManager.Utils.Auth.GetWorkers(), "UserId", "Username"), new { id = "assignedUser", @class = "form-control" })
         </div>
     </div>
 
