@@ -9,14 +9,10 @@
 
 <h2>Requirements</h2>
 
-
-
 @{if(IsManager){
-      <a href="/Requirements/Create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Requirement</a>
+    <a href="/Requirements/Create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Requirement</a>
+    <br /><br />
 }}
-
-
-<br /><br />
 
 @{  
     if (Model.Count == 0)
@@ -45,15 +41,15 @@
                 <td>@requirement.AssignedUser</td>
                 <td>
                     @{ if (!IsManager && !IsAdmin)
-                    {
+                       {
                         @Html.DropDownListFor(s => requirement.StatusId,
                                               new SelectList(requirement.StatusList, "StatusId", "Name", requirement.StatusId),
                                               new { id = "status", @class = "form-control", data_reqId = requirement.RequirementId })
-                    }
-                    else
-                    {
+                       }
+                       else
+                       {
                         <text>@requirement.Status</text>
-                    }
+                       }
                     }
                 </td>
                 <td><a class="project-name" href="/Projects/Details/@requirement.ProjectId">@requirement.ProjectName</a></td>

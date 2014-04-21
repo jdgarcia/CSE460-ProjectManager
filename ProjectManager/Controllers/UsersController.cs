@@ -22,7 +22,7 @@ namespace ProjectManager.Controllers
             }
             if (!Auth.GetCurrentUser().IsAdmin)
             {
-                return View("AccessDenied");
+                return RedirectToAction("Index", "Home");
             }
 
             List<UserContext> users = new List<UserContext>();
@@ -184,11 +184,21 @@ namespace ProjectManager.Controllers
         // Put: /Users/ChangePass
 
         [HttpPost]
-        public ActionResult ChangePass(string oldPass, string newPass)
+        public ActionResult ChangePass(string oldPass, string newPass, string confirmPass)
         {
             if (!Auth.IsLoggedIn())
             {
                 return RedirectToAction("Login", "Home");
+            }
+            if (string.IsNullOrWhiteSpace(oldPass) ||
+                string.IsNullOrWhiteSpace(newPass) ||
+                string.IsNullOrWhiteSpace(confirmPass))
+            {
+                return View();
+            }
+            if (newPass != confirmPass)
+            {
+                return View();
             }
 
             // attempt to log in with current username and oldpass
