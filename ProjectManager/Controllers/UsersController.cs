@@ -20,6 +20,10 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+            if (!Auth.GetCurrentUser().IsAdmin)
+            {
+                return View("AccessDenied");
+            }
 
             List<UserContext> users = new List<UserContext>();
 
@@ -47,6 +51,10 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+            if (!Auth.GetCurrentUser().IsAdmin)
+            {
+                return RedirectToAction("Index");
+            }
 
             return View();
         }
@@ -57,23 +65,32 @@ namespace ProjectManager.Controllers
         [HttpPost]
         public ActionResult Create(User newUser)
         {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (!Auth.GetCurrentUser().IsAdmin)
             {
-                // TODO: need to add proper error message handling/display
-                return View("PermissionsError");
+                return RedirectToAction("Index");
             }
-            
+
             using (var db = new DataClassesDataContext())
             {
-                User user = new User();
-                user.TenantId = Auth.GetCurrentUser().TenantId;
-                user.Username = newUser.Username;
-                user.Password = Auth.GetPasswordHash(newUser.Password);
-                user.RoleId = 5;    // default to GLOBAL.Employee for now
+                var existingUser = (from u in db.Users
+                                    where u.Username == newUser.Username
+                                    select u).FirstOrDefault();
 
-                db.Users.InsertOnSubmit(user);
-                db.SubmitChanges();
+                if (existingUser == null)
+                {
+                    User user = new User();
+                    user.TenantId = Auth.GetCurrentUser().TenantId;
+                    user.Username = newUser.Username;
+                    user.Password = Auth.GetPasswordHash(newUser.Password);
+                    user.RoleId = 5;    // default to GLOBAL.Employee for now
 
+                    db.Users.InsertOnSubmit(user);
+                    db.SubmitChanges();
+                }
             }
 
             return RedirectToAction("Index");
@@ -82,20 +99,28 @@ namespace ProjectManager.Controllers
         //
         // GET: /Users/EditUser
 
-        public ActionResult EditUser(int id)
+        public ActionResult EditUser(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (!Auth.GetCurrentUser().IsAdmin)
-                return View("PermissionsError");
+            {
+                return RedirectToAction("Index");
+            }
 
             DataClassesDataContext db = new DataClassesDataContext();
             User user = (from u in db.Users
                          where u.UserId == id && u.TenantId == Auth.GetCurrentUser().TenantId
                          select u).FirstOrDefault();
-            int currentId = Auth.GetCurrentUser().UserId;
 
-            if (user.UserId == currentId)
+            if (id == Auth.GetCurrentUser().UserId)
                 return View("SelfEditError");
-
             if (user == null)
                 return View("NotFound");
 
@@ -107,6 +132,15 @@ namespace ProjectManager.Controllers
         [HttpPost]
         public ActionResult EditUser(User userToModify)
         {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            if (!Auth.GetCurrentUser().IsAdmin)
+            {
+                return RedirectToAction("Index");
+            }
+
             using (var db = new DataClassesDataContext())
             {
                 var user = (from u in db.Users
