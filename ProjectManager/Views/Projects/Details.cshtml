@@ -29,7 +29,33 @@
         <td></td>
     </tr>
 </table>
-
-<p>[Requirements go here]</p>
-
-<p>[Employees go here]</p>
+<br /><br />
+@{
+    if (Model.Requirements.Count == 0)
+    {
+        <p>No Requirements saved for this Project.</p>
+    }
+    else
+    {
+        <table class="projects">
+            <thead>
+                <tr>
+                    <td>Description</td>
+                    <td>Type</td>
+                    <td>Time Expected (hrs.)</td>
+                    <td>Assigned User</td>
+                    <td>Status</td>
+                </tr>
+            </thead>
+        @foreach (var requirement in Model.Requirements)
+        {
+            <tr>
+                <td>@requirement.Description</td>
+                <td>@requirement.Type</td>
+                <td>@requirement.Time</td>
+                <td>@requirement.AssignedUser</td>
+                <td>@requirement.Status</td>
+            </tr>
+        }
+        </table>
+} }

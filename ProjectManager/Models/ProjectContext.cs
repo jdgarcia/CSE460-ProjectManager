@@ -21,6 +21,8 @@ namespace ProjectManager.Models
         public string Status { get; set; }
         public string Manager { get; set; }
 
+        public List<RequirementContext> Requirements { get; set; }
+
         public ProjectContext() { }
 
         public ProjectContext(Project project)
@@ -38,6 +40,13 @@ namespace ProjectManager.Models
             this.ExpectedEnd = ((DateTime)(project.ExpectedEnd)).ToString("MM/dd/yyyy");
             this.Status = project.Status1.Name;
             this.Manager = project.User.Username;
+
+            this.Requirements = new List<RequirementContext>();
+
+            foreach (var projReq in project.ProjectRequirements)
+            {
+                Requirements.Add(new RequirementContext(projReq.Requirement));
+            }
         }
     }
 }
