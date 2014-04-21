@@ -172,7 +172,7 @@ namespace ProjectManager.Controllers
         }
 
         //
-        // POST: /Projects/Edit
+        // POST: /Requirements/Edit
         
         [HttpPost]
         public ActionResult Edit(RequirementContext requirementToModify)
@@ -217,6 +217,26 @@ namespace ProjectManager.Controllers
                 db.SubmitChanges();
             }
             return RedirectToAction("Index");
+        }
+
+        //
+        // GET: /Requirements/UpdateStatus/{id}
+
+        public ActionResult UpdateStatus(int id, int newStatus)
+        {
+            bool success = false;
+            using (var db = new DataClassesDataContext())
+            {
+                Requirement req = db.Requirements.Where(r => r.TenantId == Auth.GetCurrentUser().TenantId && r.RequirementId == id).FirstOrDefault();
+                if (req != null)
+                {
+                    req.Status = newStatus;
+                    db.SubmitChanges();
+                    success = true;
+                }
+            }
+
+            return Json(new { success = success }, JsonRequestBehavior.AllowGet);
         }
     }
 }
