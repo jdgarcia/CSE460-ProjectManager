@@ -8,7 +8,7 @@
 <h2>Projects</h2>
 
 @{if(ProjectManager.Utils.Auth.GetCurrentUser().IsManager){
-      <<a href="/Projects/Create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Project</a>
+      <a href="/Projects/Create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Project</a>
 }}
 
 <form action="/Projects/" method="post" class="pull-right">
@@ -33,7 +33,9 @@
                     <td>Expected End Date</td>
                     <td>Manager</td>
                     <td>Status</td>
-                    <td></td>
+                    @{if (ProjectManager.Utils.Auth.GetCurrentUser().IsManager)
+                      {<td></td>}
+                    }
                 </tr>
             </thead>
         @foreach (var project in Model)
@@ -44,7 +46,9 @@
                 <td>@project.ExpectedEnd</td>
                 <td>@project.Manager</td>
                 <td>@project.Status</td>
-                <td><a href="/Projects/Edit/@project.ProjectId" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td>
+                @{if (ProjectManager.Utils.Auth.GetCurrentUser().IsManager)
+                  {<td><a href="/Projects/Edit/@project.ProjectId" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td>}
+                }
             </tr>
         }
         </table>
