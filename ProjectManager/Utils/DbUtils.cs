@@ -20,6 +20,18 @@ namespace ProjectManager.Utils
             return target;
         }
 
+        public static List<Project> GetProjects()
+        {
+            List<Project> projects = new List<Project>();
+
+            using (var db = new DataClassesDataContext())
+            {
+                projects = db.Projects.Where(p => p.TenantId == Auth.GetTenantId()).ToList();
+            }
+
+            return projects;
+        }
+
         public static List<SelectListItem> GetRoleSelectItems()
         {
             List<SelectListItem> items = new List<SelectListItem>();

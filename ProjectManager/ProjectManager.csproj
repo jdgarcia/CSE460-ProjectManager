@@ -280,6 +280,8 @@
     <Content Include="Views\Requirements\Index.cshtml" />
     <Content Include="Views\Shared\AccessDenied.cshtml" />
     <Content Include="Views\Requirements\Create.cshtml" />
+    <Content Include="Views\Requirements\NoProjects.cshtml" />
+    <Content Include="Views\Requirements\NoUsers.cshtml" />
     <Content Include="Views\CustomTypes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
