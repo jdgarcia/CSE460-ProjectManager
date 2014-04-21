@@ -258,9 +258,6 @@ namespace ProjectManager.Controllers
                 if (projectToModify.StatusId > 0)
                     project.Status = projectToModify.StatusId;
 
-                project.ManagerId = projectToModify.ManagerId;
-
-                //project.ManagerId = projectToModify.ManagerId;
                 db.SubmitChanges();
 
             }
