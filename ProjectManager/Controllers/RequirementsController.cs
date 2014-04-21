@@ -38,6 +38,30 @@ namespace ProjectManager.Controllers
                 return View(requirements);
             }
 
+            // Get all requirments for any projects manager owns
+            else if (Auth.GetCurrentUser().IsManager)
+            {
+                List<RequirementContext> requirements = new List<RequirementContext>();
+                using (var db = new DataClassesDataContext())
+                {
+                    // get all projects they own
+                    var projects = (from p in db.Projects
+                                    where p.ManagerId == Auth.GetCurrentUser().UserId
+                                    && p.TenantId == Auth.GetCurrentUser().TenantId
+                                    select p);
+
+                    foreach (var project in projects)
+                    {
+                        // get all requirements for those projects
+                        foreach (var projReq in project.ProjectRequirements)
+                        {
+                            requirements.Add(new RequirementContext(projReq.Requirement));
+                        }
+                    }                   
+                }
+                return View(requirements);
+            }
+
             //Can only view requirements assigned to them
             else
             {
