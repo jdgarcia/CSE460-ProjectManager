@@ -91,14 +91,14 @@ namespace ProjectManager.Controllers
 
                 db.Requirements.InsertOnSubmit(requirement);
 
-                Project p = (from p in db.Projects
+                Project project = (from p in db.Projects
                              where p.ProjectId == newRequirement.ProjectId
                              && p.TenantId == newRequirement.TenantId
                              select p).FirstOrDefault();
 
                 ProjectRequirement pr = new ProjectRequirement()
                 {
-                    Project = p,
+                    Project = project,
                     Requirement = requirement
                 };
 
