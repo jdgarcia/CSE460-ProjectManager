@@ -101,14 +101,12 @@ namespace ProjectManager.Controllers
 
         [HttpPost]
         public ActionResult Create(RequirementContext newRequirement)
-        {
-            string username = !String.IsNullOrWhiteSpace(newRequirement.AssignedUser) ? newRequirement.AssignedUser : Auth.GetCurrentUser().Username;
-            
+        {            
             using (var db = new DataClassesDataContext())
             {
                 User user = (from u in db.Users
                              where u.TenantId == Auth.GetCurrentUser().TenantId
-                             && username == u.Username
+                             && u.UserId == newRequirement.AssignedUserId
                              select u).FirstOrDefault();
                 
                 Requirement requirement = new Requirement();
@@ -123,13 +121,14 @@ namespace ProjectManager.Controllers
 
                 Project project = (from p in db.Projects
                              where p.ProjectId == newRequirement.ProjectId
-                             && p.TenantId == newRequirement.TenantId
+                             && p.TenantId == Auth.GetCurrentUser().TenantId
                              select p).FirstOrDefault();
 
                 ProjectRequirement pr = new ProjectRequirement()
                 {
                     Project = project,
-                    Requirement = requirement
+                    Requirement = requirement,
+                    TenantId = project.TenantId
                 };
 
                 db.ProjectRequirements.InsertOnSubmit(pr);
