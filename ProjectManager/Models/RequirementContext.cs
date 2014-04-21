@@ -63,7 +63,7 @@ namespace ProjectManager.Models
             
             this.ProjectId = project.ProjectId;
             this.ProjectName = project.Name;
-
+            db.Dispose();
         }
     }
 }
