@@ -19,7 +19,7 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            if (!Auth.IsUsingCustomTypes())
+            if (!Auth.IsUsingCustomTypes() || !Auth.GetCurrentUser().IsAdmin)
             {
                 return View("AccessDenied");
             }
@@ -36,7 +36,7 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            if (!Auth.IsUsingCustomTypes())
+            if (!Auth.IsUsingCustomTypes() || !Auth.GetCurrentUser().IsAdmin)
             {
                 return RedirectToAction("Index");
             }
@@ -54,7 +54,7 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            if (!Auth.IsUsingCustomTypes())
+            if (!Auth.IsUsingCustomTypes() || !Auth.GetCurrentUser().IsAdmin)
             {
                 return RedirectToAction("Index");
             }
@@ -81,7 +81,7 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            if (!Auth.IsUsingCustomTypes())
+            if (!Auth.IsUsingCustomTypes() || !Auth.GetCurrentUser().IsAdmin)
             {
                 return RedirectToAction("Index");
             }
@@ -107,7 +107,7 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            if (!Auth.IsUsingCustomTypes())
+            if (!Auth.IsUsingCustomTypes() || !Auth.GetCurrentUser().IsAdmin)
             {
                 return RedirectToAction("Index");
             }
