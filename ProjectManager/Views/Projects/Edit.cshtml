@@ -40,6 +40,13 @@
     <br />
     <br />
 
+    <label for="oldManager">Old Project Manager: @Model.Manager</label>
+    <br />
+    <label for="newManager">New Project Manager: </label>
+    @Html.DropDownListFor(m => Model.ManagerId, new SelectList(ProjectManager.Utils.Auth.GetManagersAndAdmins(), "UserId", "Username"));
+    <br />
+    <br />
+
     <input type="submit" value="Save Changes" class="btn btn-primary" />
     <a href="/Projects" class="btn btn-default">Discard Changes</a>
 </form>

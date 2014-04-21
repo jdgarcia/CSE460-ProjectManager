@@ -9,6 +9,7 @@ namespace ProjectManager.Models
     {
         public int TenantId { get; set; }
         public int ProjectId { get; set; }
+        public int ManagerId { get; set; }
         public int StatusId { get; set; }
         public string Name { get; set; }
         public string Start { get; set; }
@@ -35,6 +36,7 @@ namespace ProjectManager.Models
             this.RawDateStart = (DateTime)project.Start;
             this.RawDateEnd = (DateTime)project.ExpectedEnd;
             this.StatusId = project.Status;
+            this.ManagerId = project.ManagerId;
 
             //Format date time in preferred output style
             this.Start = ((DateTime)(project.Start)).ToString("MM/dd/yyyy");

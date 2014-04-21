@@ -70,6 +70,24 @@ namespace ProjectManager.Utils
             return (GetCurrentUser() != null);
         }
 
+        public static List<Models.User> GetManagersAndAdmins()
+        {
+            List<User> managers = new List<User>();
+            int tID = GetCurrentUser().TenantId;
+            using (var db = new DataClassesDataContext())
+            {
+                var possibleManagers = (from u in db.Users
+                               where u.TenantId == tID &&
+                               (u.RoleId == 1 || u.RoleId == 4) //1 is admin, 4 is manager
+                               select u);
+                foreach (var manager in possibleManagers)
+                {
+                    managers.Add(manager);
+                }
+            }
+            return managers;
+        }
+
         public static CurrentUserContext GetCurrentUser()
         {
             CurrentUserContext user = (CurrentUserContext)HttpContext.Current.Session["CurrentUser"];

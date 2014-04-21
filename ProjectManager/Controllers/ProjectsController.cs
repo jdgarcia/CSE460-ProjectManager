@@ -143,8 +143,18 @@ namespace ProjectManager.Controllers
             project.TenantId = Auth.GetCurrentUser().TenantId;
             project.ManagerId = Auth.GetCurrentUser().UserId;
             project.Name = newProject.Name;
-            project.Start = newProject.Start;
-            project.ExpectedEnd = newProject.ExpectedEnd;
+
+            //Check if the user put the start date after the end date, and swap if so
+            if (newProject.Start.Value.CompareTo(newProject.ExpectedEnd.Value) > 0)
+            {
+                project.Start = newProject.ExpectedEnd;
+                project.ExpectedEnd = newProject.Start;
+            }
+            else
+            {
+                project.Start = newProject.Start;
+                project.ExpectedEnd = newProject.ExpectedEnd;
+            }
             project.Status = 1;
             using (var db = new DataClassesDataContext())
             {
@@ -233,13 +243,23 @@ namespace ProjectManager.Controllers
                 //Check to make sure user actually input values
                 if (projectToModify.Name != null)
                     project.Name = projectToModify.Name;
-                if (projectToModify.RawDateStart != null)
+
+                //Check if the start date occurs after the end date, and swap them if so
+                if (projectToModify.RawDateStart.CompareTo(projectToModify.RawDateEnd) > 0)
+                {
+                    project.Start = projectToModify.RawDateEnd;
+                    project.ExpectedEnd = projectToModify.RawDateStart;
+                }
+                else
+                {
                     project.Start = projectToModify.RawDateStart;
-                if (projectToModify.RawDateEnd != null)
                     project.ExpectedEnd = projectToModify.RawDateEnd;
+                }
 
                 if (projectToModify.StatusId > 0)
                     project.Status = projectToModify.StatusId;
+
+                project.ManagerId = projectToModify.ManagerId;
 
                 //project.ManagerId = projectToModify.ManagerId;
                 db.SubmitChanges();

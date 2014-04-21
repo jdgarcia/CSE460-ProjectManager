@@ -272,6 +272,7 @@
     <Content Include="Views\Users\NotFound.cshtml" />
     <Content Include="Views\Users\SelfEditError.cshtml" />
     <Content Include="Views\Projects\Details.cshtml" />
+    <Content Include="Views\Users\PermissionsError.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
