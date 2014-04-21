@@ -45,20 +45,15 @@
                 <td>@requirement.AssignedUser</td>
                 <td>
                     @{ if (!IsManager && !IsAdmin)
-                       {
-                           
-                                    <div class="form-group">
-                                        <div class="col-sm-10">
-                                            @Html.DropDownListFor(s => requirement.StatusId,
-                                                                  ProjectManager.Utils.DbUtils.GetStatusSelectItems(),
-                                                                  new { id = "status", @class = "form-control" })
-                                        </div>
-                                    </div>
-                       }
-                       else
-                       {
-                           <text>@requirement.Status</text>
-                       }
+                    {
+                        @Html.DropDownListFor(s => requirement.StatusId,
+                                              ProjectManager.Utils.DbUtils.GetStatusSelectItems(),
+                                              new { id = "status", @class = "form-control", data_reqId = requirement.RequirementId })
+                    }
+                    else
+                    {
+                        <text>@requirement.Status</text>
+                    }
                     }
                 </td>
                 <td><a class="project-name" href="/Projects/Details/@requirement.ProjectId">@requirement.ProjectName</a></td>
@@ -67,3 +62,23 @@
         </table>
     }
 }
+
+<script>
+    $(document).ready(function () {
+        $('.projects select').change(function (event) {
+            var $target = $(event.target);
+            var reqId = $target.data('reqid');
+            var statusId = $target.val();
+            
+            $.ajax({
+                url: "/Requirements/UpdateStatus",
+                data: {
+                    id: reqId,
+                    newStatus: statusId,
+                }
+            }).done(function (result) {
+                // result is { success: bool }
+            });
+        });
+    });
+</script>

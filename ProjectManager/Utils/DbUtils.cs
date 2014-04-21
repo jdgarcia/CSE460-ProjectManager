@@ -9,6 +9,17 @@ namespace ProjectManager.Utils
 {
     public class DbUtils
     {
+        public static Requirement GetRequirementById(int id)
+        {
+            Requirement target = null;
+            using (var db = new DataClassesDataContext())
+            {
+                target = db.Requirements.Where(r => r.TenantId == Auth.GetCurrentUser().TenantId && r.RequirementId == id).FirstOrDefault();
+            }
+
+            return target;
+        }
+
         public static List<SelectListItem> GetRoleSelectItems()
         {
             List<SelectListItem> items = new List<SelectListItem>();
