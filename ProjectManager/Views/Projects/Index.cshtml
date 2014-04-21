@@ -7,7 +7,9 @@
 
 <h2>Projects</h2>
 
-<a href="/Projects/Create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Project</a>
+@{if(ProjectManager.Utils.Auth.GetCurrentUser().IsManager){
+      <<a href="/Projects/Create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Project</a>
+}}
 
 <form action="/Projects/" method="post" class="pull-right">
     <input type="text" id="filterInput" name="Filter" placeholder="Title or Status" />
