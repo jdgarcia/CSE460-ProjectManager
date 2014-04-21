@@ -18,6 +18,9 @@ namespace ProjectManager.Models
         public string Status { get; set; }
         public string AssignedUser { get; set; }
 
+        public int ProjectId { get; set; }
+        public string ProjectName { get; set; }
+
         // store Statuses that the project is allowed to take on
         public List<ProjectManager.Models.Status> StatusList { get; set; }
 
@@ -48,6 +51,16 @@ namespace ProjectManager.Models
             {
                 StatusList.Add(status);
             }
+
+            var project = (from r in db.Requirements
+                          join pr in db.ProjectRequirements on r.RequirementId equals pr.RequirementId
+                          join p in db.Projects on pr.ProjectId equals p.ProjectId
+                          where r.RequirementId == this.RequirementId && r.TenantId == this.TenantId
+                          select p).FirstOrDefault();
+            
+            this.ProjectId = project.ProjectId;
+            this.ProjectName = project.Name;
+
         }
     }
 }
