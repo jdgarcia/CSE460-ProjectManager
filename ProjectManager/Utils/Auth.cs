@@ -92,6 +92,26 @@ namespace ProjectManager.Utils
             return user;
         }
 
+        public static int GetTenantId()
+        {
+            return ((CurrentUserContext)(HttpContext.Current.Session["CurrentUser"])).TenantId;
+        }
+
+        public static int GetUserId()
+        {
+            return ((CurrentUserContext)(HttpContext.Current.Session["CurrentUser"])).UserId;
+        }
+
+        public static bool IsAdmin()
+        {
+            return ((CurrentUserContext)(HttpContext.Current.Session["CurrentUser"])).IsAdmin;
+        }
+
+        public static bool IsManager()
+        {
+            return ((CurrentUserContext)(HttpContext.Current.Session["CurrentUser"])).IsManager;
+        }
+
         public static string GetPasswordHash(string password)
         {
             var hash = System.Security.Cryptography.SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(password));
