@@ -97,9 +97,9 @@ namespace ProjectManager.Controllers
         }
 
         //
-        // GET: /Users/EditUser
+        // GET: /Users/Edit/{id}
 
-        public ActionResult EditUser(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -128,9 +128,9 @@ namespace ProjectManager.Controllers
         }
 
         //
-        // POST: /Users/EditUser
+        // POST: /Users/Edit
         [HttpPost]
-        public ActionResult EditUser(User userToModify)
+        public ActionResult Edit(User userToModify)
         {
             if (!Auth.IsLoggedIn())
             {

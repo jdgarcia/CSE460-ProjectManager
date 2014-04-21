@@ -1,14 +1,14 @@
 ﻿@model ProjectManager.Models.User
 
 @{
-    ViewBag.Title = "EditUser";
+    ViewBag.Title = "Edit";
     ViewBag.Page = "Users";
     //4 and 5 for Manager and employee, 1 for ADMIN  
 }
 
-<h2>EditUser</h2>
+<h2>Edit User</h2>
 
-<form action="/Users/EditUser" method="post">
+<form action="/Users/Edit" method="post">
     <input type="hidden" name="UserId" value="@Model.UserId" />
     <label for="oldUserName">Old Username: @Model.Username</label>
     <br />
