@@ -88,6 +88,44 @@ namespace ProjectManager.Utils
             return managers;
         }
 
+        public static List<Models.User> GetWorkers() 
+        {
+            List<User> workers = new List<User>();
+            int tID = GetCurrentUser().TenantId;
+            using (var db= new DataClassesDataContext())
+            {
+                var result = (from u in db.Users
+                               where u.TenantId == tID
+                               && u.RoleId == 5
+                               select u);
+
+                foreach (var worker in result)
+	            {
+                    workers.Add(worker);
+	            }
+            }
+            return workers;
+        }
+
+        public static List<RequirementType> GetRequirementTypes()
+        {
+            List<RequirementType> types = new List<RequirementType>();
+            int tID = GetCurrentUser().TenantId;
+            using (var db = new DataClassesDataContext())
+            {
+                var result = (from t in db.RequirementTypes
+                              where t.TenantId == tID
+                              || t.TenantId == 1
+                              select t);
+
+                foreach (var type in result)
+                {
+                    types.Add(type);
+                }
+            }
+            return types;
+        }
+
         public static CurrentUserContext GetCurrentUser()
         {
             CurrentUserContext user = (CurrentUserContext)HttpContext.Current.Session["CurrentUser"];
