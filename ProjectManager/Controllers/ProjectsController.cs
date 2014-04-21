@@ -200,7 +200,7 @@ namespace ProjectManager.Controllers
 
         public ActionResult Edit(int id)
         {
-            if (!Auth.IsLoggedIn())
+            if (!Auth.IsLoggedIn() || !Auth.GetCurrentUser().IsManager)
             {
                 return RedirectToAction("Login", "Home");
             }
