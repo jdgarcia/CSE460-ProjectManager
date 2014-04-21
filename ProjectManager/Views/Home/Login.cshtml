@@ -4,12 +4,24 @@
 
 <h2>Login</h2>
 
-<form action="/Home/Login" method="post">
-    <label for="username2">Username</label>
-    <input type="text" id="username2" name="Username" autofocus="autofocus" />
-    <br />
-    <label for="password2">Password</label>
-    <input type="password" id="password2" name="Password" />
-    <br />
-    <input type="submit" value="Login" class="btn btn-primary" />
+<form action="/Home/Login" method="post" class="form-horizontal">
+    <div class="form-group">
+        <label for="username" class="col-sm-2">Username</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="username" name="Username" autofocus="autofocus" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="password" class="col-sm-2">Password</label>
+        <div class="col-sm-4">
+            <input type="password" class="form-control" id="password" name="Password" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+            <input type="submit" value="Login" class="btn btn-primary" />
+        </div>
+    </div>
 </form>

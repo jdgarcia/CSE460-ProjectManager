@@ -106,8 +106,8 @@
         font-weight: bold;
     }
 
-.img-max-height {
-    max-height: 150px;
+.logo-preview {
+    max-width: 320px;
 }
 
 .color-block {

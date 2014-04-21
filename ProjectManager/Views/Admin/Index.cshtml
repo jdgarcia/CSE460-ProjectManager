@@ -10,7 +10,7 @@
 <p>Welcome @Model.Username!</p>
 
 <h3>Current Logo:</h3>
-<p><img src="@Model.LogoPath" alt="[Logo]" class="img-max-height" ></p>
+<p><img src="@Model.LogoPath" alt="[Logo]" class="logo-preview" ></p>
 @using (Html.BeginForm("EditLogo", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <input type="file" id="file" name="file" />
