@@ -72,6 +72,10 @@
 
 /* Projects styles */
 
+.projects {
+    width: 100%;
+}
+
 .projects thead {
     background-color: #222222;
     color: white;
