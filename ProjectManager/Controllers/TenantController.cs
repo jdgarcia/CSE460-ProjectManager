@@ -78,10 +78,7 @@ namespace ProjectManager.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
-        //
-        // GET: /Tenant/OnlyHexInString/{color}
-
-        public bool OnlyHexInString(string id)
+        public static bool OnlyHexInString(string id)
         {
             if (id == null)
             {

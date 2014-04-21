@@ -17,3 +17,27 @@
     <br />
     <input type="submit" value="Update Logo" class="btn btn-primary" />
 }
+
+
+<h3>Colors:</h3>
+<form action="/Admin/ChangeColors" method="post">
+<table class="colors">
+    <tr>
+        <td><label for="currentBannerColor">Banner Color:</label></td>
+        <td><input type="text" id="bannerColor" name="bannerColor" value="@Model.BannerColor" maxlength="7"/></td>
+        <td><div id="currentBannerColor" class="color-block" style="background-color:@Model.BannerColor";>&nbsp;</div></td>
+    </tr>
+    <tr>
+        <td><label for="currentTextColor">Text Color:</label></td>
+        <td><input type="text" id="textColor" name="textColor" value="@Model.TextColor" maxlength="7"/></td>
+        <td><div id="currentTextColor" class="color-block" style="background-color:@Model.TextColor";>&nbsp;</div></td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="Update Colors" class="btn btn-primary" /></td>
+    </tr>
+</table>
+<//form>
+
+
+
+
