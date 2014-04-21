@@ -8,40 +8,29 @@
 
 <h2>Edit User</h2>
 
-<form action="/Users/Edit" method="post">
+<form action="/Users/Edit" method="post" class="form-horizontal">
     <input type="hidden" name="UserId" value="@Model.UserId" />
-    <label for="oldUserName">Old Username: @Model.Username</label>
-    <br />
-    <label for="newUserName">New Username: </label>
-    <input type="text" id="username" name="Username" value="@Model.Username" />
-    <br />
-    <br />
 
-    <label for="oldRole">Old User Role: @{
-        int userRole = Model.RoleId;
-        string displayRole = "";
-        if (userRole == 4) {
-            displayRole = "Manager"; }
-        else if (userRole == 5) {
-            displayRole = "Employee"; }
-        else if (userRole == 1) {
-            displayRole = "ADMIN";}
-        else {
-            displayRole = userRole + ""; }    
-    }@displayRole</label>
-    <br />
-    <label for="newRole">New User Role: </label>
-    @Html.DropDownListFor( m => Model.RoleId , new SelectList(new List<Object>{
-        new { value=1 , text = "Admin" },
-        new { value=4 , text = "Manager" },
-        new { value=5 , text = "Employee" }
-        },
-        "value",
-        "text",
-        3))
-    <br />
-    <br />
+    <div class="form-group">
+        <label for="username" class="col-sm-2">Username</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="username" name="Username" value="@Model.Username" spellcheck="false" autofocus="autofocus" />
+        </div>
+    </div>
 
-    <input type="submit" value="Save Changes" class="btn btn-primary" />
-    <a href="/Users" class="btn btn-default">Discard Changes</a>
+    <div class="form-group">
+        <label for="userrole" class="col-sm-2">User Role</label>
+        <div class="col-sm-10">
+            @Html.DropDownListFor(m => Model.RoleId,
+                                  ProjectManager.Utils.DbUtils.GetRoleSelectItems(),
+                                  new { id = "userrole", @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" value="Save Changes" class="btn btn-primary" />
+            <a href="/Users" class="btn btn-default">Discard Changes</a>
+        </div>
+    </div>
 </form>

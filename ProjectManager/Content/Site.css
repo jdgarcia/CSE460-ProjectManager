@@ -114,6 +114,7 @@
     float: left; 
     height: 30px; 
     width: 100px;
+    border: solid 1px #cccccc;
 }
 
 /*Color Selection*/

@@ -35,7 +35,9 @@
     <div class="form-group">
         <label for="status" class="col-sm-2">Status</label>
         <div class="col-sm-10">
-            @Html.DropDownListFor(s => Model.StatusId, new SelectList(@Model.StatusList, "StatusId", "Name"), new { id = "status", @class = "form-control" })
+            @Html.DropDownListFor(s => Model.StatusId,
+                                  ProjectManager.Utils.DbUtils.GetStatusSelectItems(),
+                                  new { id = "status", @class = "form-control" })
         </div>
     </div>
 
