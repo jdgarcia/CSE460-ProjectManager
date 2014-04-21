@@ -1,18 +1,29 @@
-﻿@model ProjectManager.Models.User
-
-@{
+﻿@{
     ViewBag.Title = "ChangePass";
     ViewBag.Page = "Users";
 }
 
 <h2>ChangePass</h2>
 
-<form action="/Users/ChangePass" method="post">
-    <label for="oldPass">Old Password:</label>
-    <input type="password" id="oldPass" name="oldPass" autofocus="autofocus" />
-    <br />
-    <label for="newPass">New Password:</label>
-    <input type="password" id="newPass" name="newPass" />
-    <br />
-    <input type="submit" value="Change Password" class="btn btn-primary" />
+<form action="/Users/ChangePass" method="post" class="form-horizontal">
+    <div class="form-group">
+        <label for="oldPass" class="col-sm-2">Current Password</label>
+        <div class="col-sm-5">
+            <input type="password" class="form-control" id="oldPass" name="oldPass" autofocus="autofocus" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="newPass" class="col-sm-2">New Password</label>
+        <div class="col-sm-5">
+            <input type="password" class="form-control" id="newPass" name="newPass" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="/Users" class="btn btn-default">Cancel</a>
+        </div>
+    </div>
 </form>
