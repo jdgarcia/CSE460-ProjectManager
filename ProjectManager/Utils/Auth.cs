@@ -107,7 +107,7 @@ namespace ProjectManager.Utils
             return workers;
         }
 
-        public static List<RequirementType> GetRequirementTypes()
+        public static List<Models.RequirementType> GetRequirementTypes()
         {
             List<RequirementType> types = new List<RequirementType>();
             int tID = GetCurrentUser().TenantId;
@@ -124,6 +124,26 @@ namespace ProjectManager.Utils
                 }
             }
             return types;
+        }
+
+        public static List<Models.Project> GetManagedProjects()
+        {
+            List<Project> projects = new List<Project>();
+            int tID = GetCurrentUser().TenantId;
+            int uID = GetCurrentUser().UserId;
+            using (var db = new DataClassesDataContext())
+            {
+                var result = (from p in db.Projects
+                              where p.TenantId == tID
+                              && p.ManagerId == uID
+                              select p);
+
+                foreach (var proj in result)
+                {
+                    projects.Add(proj);
+                }
+            }
+            return projects;
         }
 
         public static CurrentUserContext GetCurrentUser()
