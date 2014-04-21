@@ -47,15 +47,7 @@ namespace ProjectManager.Controllers
                 return View();
             }
 
-            var ext = Path.GetExtension(file.FileName);
-            string fileName = Regex.Replace(Auth.GetCurrentUser().TenantName + ext, @"\s", "_");
-
-            // store the file inside ~/Logos/uploads folder
-            var path = Path.Combine(Server.MapPath("~/Logos"), fileName);
-            file.SaveAs(path);
-
             // file should replace old one with same name so no update to db necessary
-
             // but to avoid having to manually change db and commit, i'll reset it anyway :P
             using (var db = new DataClassesDataContext())
             {
@@ -63,8 +55,11 @@ namespace ProjectManager.Controllers
                               where t.TenantId == Auth.GetCurrentUser().TenantId
                               select t).FirstOrDefault();
 
-                tenant.LogoPath = "/Logos/"+fileName;
+                string fileName = string.Format("{0}{1}", tenant.TenantId, Path.GetExtension(file.FileName));
+                string path = Path.Combine(Server.MapPath("~/Logos"), fileName);
+                file.SaveAs(path);
 
+                tenant.LogoPath = "/Logos/" + fileName;
                 db.SubmitChanges();
             }
 

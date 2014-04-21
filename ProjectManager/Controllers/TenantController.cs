@@ -31,48 +31,50 @@ namespace ProjectManager.Controllers
                 return View();
             }
 
-            string fileName = "";
-
-            if (file == null || file.ContentLength <= 0)
+            bool success = false;
+            using (var db = new DataClassesDataContext())
             {
-                // No logo
-                // Set default to logo1.jpg
-                fileName = "logo1.jpg";
-            }
-            else
-            {
-                var ext = Path.GetExtension(file.FileName);
-                fileName = Regex.Replace(newTenant.OrgName + ext, @"\s", "_");
+                var numMatched = db.Tenants.Where(t => t.OrgName == newTenant.OrgName).Count();
+                numMatched += db.Users.Where(u => u.Username == newTenant.AdminUsername).Count();
 
-                if (file != null && file.ContentLength > 0)
+                if (numMatched == 0)
                 {
-                    // store the file inside ~/Logos/uploads folder. Name it Org Name of the tenant
-                    var path = Path.Combine(Server.MapPath("~/Logos"), newTenant.OrgName);
-                    file.SaveAs(path);
+                    Tenant tenant = new Tenant();
+                    tenant.OrgName = newTenant.OrgName;
+                    tenant.LogoPath = "/Logos/logo1.jpg";
+                    tenant.BannerColor = OnlyHexInString(newTenant.BannerColor) ? newTenant.BannerColor : "#357ebd";
+                    tenant.TextColor = OnlyHexInString(newTenant.TextColor) ? newTenant.TextColor : "#FFFFFF";
+
+                    User user = new User();
+                    user.Username = newTenant.AdminUsername;
+                    user.Password = Auth.GetPasswordHash(newTenant.AdminPassword);
+                    user.RoleId = 1;
+
+                    tenant.Users.Insert(tenant.Users.Count, user);
+
+                    db.Tenants.InsertOnSubmit(tenant);
+                    db.SubmitChanges();
+
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        // store the file inside ~/Logos/uploads folder. Name it Org Name of the tenant
+                        string fileName = string.Format("{0}{1}", tenant.TenantId, Path.GetExtension(file.FileName));
+                        string path = Path.Combine(Server.MapPath("~/Logos"), fileName);
+                        file.SaveAs(path);
+                        tenant.LogoPath = "/Logos/" + fileName;
+                        db.SubmitChanges();
+                    }
+
+                    success = true;
+
+                    Auth.Login(user);
                 }
             }
 
-            // TODO: check if OrgName already exists
-            using (var db = new DataClassesDataContext())
+            if (!success)
             {
-                Tenant tenant = new Tenant();
-                tenant.OrgName = newTenant.OrgName;
-                tenant.LogoPath = "/Logos/"+fileName;
-                tenant.BannerColor = OnlyHexInString(newTenant.BannerColor) ? newTenant.BannerColor : "#357ebd";
-                tenant.TextColor = OnlyHexInString(newTenant.TextColor) ? newTenant.TextColor : "#FFFFFF";
-
-
-                User user = new User();
-                user.Username = newTenant.AdminUsername;
-                user.Password = Auth.GetPasswordHash(newTenant.AdminPassword);
-                user.RoleId = 1;
-
-                tenant.Users.Insert(tenant.Users.Count, user);
-
-                db.Tenants.InsertOnSubmit(tenant);
-                db.SubmitChanges();
-
-                Auth.Login(user);
+                // need to add error message
+                return RedirectToAction("Create");
             }
 
             return RedirectToAction("Index", "Admin");
