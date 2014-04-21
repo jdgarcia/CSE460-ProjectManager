@@ -19,7 +19,7 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            if (!Auth.IsUsingCustomTypes())
+            if (!Auth.IsUsingCustomTypes() || !Auth.GetCurrentUser().IsAdmin)
             {
                 return View("AccessDenied");
             }
@@ -36,7 +36,7 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            if (!Auth.IsUsingCustomTypes())
+            if (!Auth.IsUsingCustomTypes() || !Auth.GetCurrentUser().IsAdmin)
             {
                 return RedirectToAction("Index");
             }
@@ -54,7 +54,7 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            if (!Auth.IsUsingCustomTypes())
+            if (!Auth.IsUsingCustomTypes() || !Auth.GetCurrentUser().IsAdmin)
             {
                 return RedirectToAction("Index");
             }
@@ -73,6 +73,31 @@ namespace ProjectManager.Controllers
         }
 
         //
+        // GET: /CustomTypes/Details/{id}
+
+        public ActionResult Details(int id)
+        {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            if (!Auth.IsUsingCustomTypes() || !Auth.GetCurrentUser().IsAdmin)
+            {
+                return RedirectToAction("Index");
+            }
+
+            RequirementType rType = DbUtils.GetRequirementTypeById(id);
+
+            if (rType == null)
+            {
+                ViewBag.Page = "CustomTypes";
+                return View("NotFound");
+            }
+
+            return View(new RequirementTypeContext(rType));
+        }
+
+        //
         // GET: /CustomTypes/Edit/{id}
 
         public ActionResult Edit(int id)
@@ -81,7 +106,7 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            if (!Auth.IsUsingCustomTypes())
+            if (!Auth.IsUsingCustomTypes() || !Auth.GetCurrentUser().IsAdmin)
             {
                 return RedirectToAction("Index");
             }
@@ -107,7 +132,7 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            if (!Auth.IsUsingCustomTypes())
+            if (!Auth.IsUsingCustomTypes() || !Auth.GetCurrentUser().IsAdmin)
             {
                 return RedirectToAction("Index");
             }

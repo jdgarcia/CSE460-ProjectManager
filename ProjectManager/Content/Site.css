@@ -70,6 +70,15 @@
         vertical-align: middle;
     }
 
+.nav .active a {
+    font-weight: bold;
+}
+
+.error-name {
+    font-weight: bold;
+    color: darkred;
+}
+
 /* Projects styles */
 
 .projects {

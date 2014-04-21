@@ -68,6 +68,8 @@ namespace ProjectManager.Controllers
         [HttpPost]
         public ActionResult Index(string Filter)
         {
+            Filter = Filter.ToLowerInvariant();
+
             if (!Auth.IsLoggedIn())
             {
                 return RedirectToAction("Login", "Home");
