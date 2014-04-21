@@ -74,7 +74,6 @@ namespace ProjectManager.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-
             //Full project viewing privileges
             if (Auth.GetCurrentUser().IsAdmin)
             {
@@ -88,9 +87,11 @@ namespace ProjectManager.Controllers
                                   select p);
                     foreach (var project in result)
                     {
+                        //Filter by project name, status, and project manager 
                         if (project.Name.ToLowerInvariant().Contains(Filter) ||
-                            project.Status1.Name.ToLowerInvariant().Contains(Filter))
-                            projects.Add(new ProjectContext(project));
+                            project.Status1.Name.ToLowerInvariant().Contains(Filter) ||
+                            project.User.Username.ToLowerInvariant().Contains(Filter))
+                                projects.Add(new ProjectContext(project));
                     }
                 }
 

@@ -84,6 +84,94 @@ namespace ProjectManager.Controllers
         }
 
         //
+        //POST: /Requirements/
+        [HttpPost]
+        public ActionResult Index(string Filter)
+        {
+            if (!Auth.IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            Filter = Filter.ToLowerInvariant();
+            //Full requirement viewing privileges
+            if (Auth.GetCurrentUser().IsAdmin)
+            {
+                List<RequirementContext> requirements = new List<RequirementContext>();
+
+                using (var db = new DataClassesDataContext())
+                {
+                    var result = (from r in db.Requirements
+                                  where r.TenantId == Auth.GetCurrentUser().TenantId
+                                  select r);
+                    foreach (var requirement in result)
+                    {
+                        //Filter by requirement name, status, worker, and requirement type
+                        if (requirement.Description.ToLowerInvariant().Contains(Filter) ||
+                            requirement.Status1.Name.ToLowerInvariant().Contains(Filter) ||
+                            requirement.User.Username.ToLowerInvariant().Contains(Filter) ||
+                            requirement.RequirementType.Name.ToLowerInvariant().Contains(Filter))
+                                requirements.Add(new RequirementContext(requirement));
+                    }
+                }
+
+                return View(requirements);
+            }
+
+            // Get all requirments for any projects manager owns
+            else if (Auth.GetCurrentUser().IsManager)
+            {
+                List<RequirementContext> requirements = new List<RequirementContext>();
+                using (var db = new DataClassesDataContext())
+                {
+                    // get all projects they own
+                    var projects = (from p in db.Projects
+                                    where p.ManagerId == Auth.GetCurrentUser().UserId
+                                    && p.TenantId == Auth.GetCurrentUser().TenantId
+                                    select p);
+
+                    foreach (var project in projects)
+                    {
+                        // get all requirements for those projects
+                        foreach (var projReq in project.ProjectRequirements)
+                        {
+                            if (projReq.Requirement.Description.ToLowerInvariant().Contains(Filter) ||
+                                projReq.Requirement.Status1.Name.ToLowerInvariant().Contains(Filter) ||
+                                projReq.Requirement.User.Username.ToLowerInvariant().Contains(Filter) ||
+                                projReq.Requirement.RequirementType.Name.ToLowerInvariant().Contains(Filter))
+                                    requirements.Add(new RequirementContext(projReq.Requirement));
+                        }
+                    }
+                }
+                return View(requirements);
+            }
+
+            //Can only view requirements assigned to them
+            else
+            {
+                List<RequirementContext> requirements = new List<RequirementContext>();
+
+                using (var db = new DataClassesDataContext())
+                {
+                    var result = (from r in db.Requirements
+                                  where r.TenantId == Auth.GetCurrentUser().TenantId &&
+                                  r.AssignedUser == Auth.GetCurrentUser().UserId
+                                  orderby r.Status ascending
+                                  select r);
+                    foreach (var requirement in result)
+                    {
+                        //Filter by requirement name, status, and worker
+                        if (requirement.Description.ToLowerInvariant().Contains(Filter) ||
+                            requirement.Status1.Name.ToLowerInvariant().Contains(Filter) ||
+                            requirement.User.Username.ToLowerInvariant().Contains(Filter) ||
+                            requirement.RequirementType.Name.ToLowerInvariant().Contains(Filter))
+                                requirements.Add(new RequirementContext(requirement));
+                    }
+                }
+                return View(requirements);
+            }
+        }
+
+        //
         // GET: /Requirements/Create
 
         public ActionResult Create()
